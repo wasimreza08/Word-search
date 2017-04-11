@@ -99,7 +99,7 @@ public class WordSearchGridAdapter extends BaseAdapter {
              //   holder.textView.setTextColor(mContext.getResources().getColor(R.color.green));
             }
         } else {
-            holder.textView.setBackgroundResource(R.drawable.grid_item_solid);
+            holder.textView.setBackgroundResource(R.drawable.grid_item_highlight_purple);
         }
 
         return convertView;

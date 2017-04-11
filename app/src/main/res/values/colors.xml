@@ -6,5 +6,7 @@
     <color name="yellow">#FFEAF207</color>
     <color name="purple">#8B77CC</color>
     <color name="white">#FFF</color>
+
+    <color name="red_light">#FFF79090</color>
     <color name="red">#F22442</color>
 </resources>

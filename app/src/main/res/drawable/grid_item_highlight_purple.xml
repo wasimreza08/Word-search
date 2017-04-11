@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/purple" />
-    <corners android:radius="400dp" />
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/blue">
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="oval"
+            android:padding="8dp">
+            <gradient
+                android:type="sweep"
+                android:centerX="45%"
+                android:startColor="@color/blue"
+                android:centerColor="@color/light_green"
+                android:endColor="@color/blue"
+                android:angle="90"/>
+            <corners android:radius="30dp" />
+        </shape>
+    </item>
+</selector>

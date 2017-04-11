@@ -3,7 +3,8 @@
     <color name="blue">#00A2EA</color>
     <color name="green">#1ACA85</color>
     <color name="light_green">#FF3EFCB1</color>
-    <!--<color name="green">#10EC92</color>-->
+    <color name="yellow">#FFEAF207</color>
     <color name="purple">#8B77CC</color>
+    <color name="white">#FFF</color>
     <color name="red">#F22442</color>
 </resources>

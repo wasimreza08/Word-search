@@ -19,16 +19,17 @@
         android:layout_margin="40dp">
 
         <chrisjluc.onesearch.ui.components.GameBoldTextView
-            android:textSize="80sp"
+            android:textSize="70sp"
             android:text="ONE"
             android:textColor="@color/green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <chrisjluc.onesearch.ui.components.GameBoldTextView
-            android:textSize="80sp"
+            android:textSize="70sp"
             android:text="SEARCH"
             android:textColor="@color/blue"
+            android:singleLine="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

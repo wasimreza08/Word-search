@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import chrisjluc.onesearch.R;
@@ -47,6 +48,11 @@ public class WordSearchGridAdapter extends BaseAdapter {
 
             holder.textView.setText("" + n.getLetter());
             holder.textView.setHeight(mColumnWidth);
+           /* LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            params.setMargins(10,10,10,10);*/
+            //holder.textView.setPadding(2,2,2,2);
+       //     holder.textView.setLayoutParams(params);
             int size;
             int difference = ((WordSearchManager.ADVANCED_MAX_WORDLENGTH + WordSearchManager.ADVANCED_MAX_DIMENSION_OFFSET - WordSearchManager.EASY_MIN_WORDLENGTH) / 6);
             if (WordSearchManager.EASY_MIN_WORDLENGTH <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference))
@@ -76,7 +82,7 @@ public class WordSearchGridAdapter extends BaseAdapter {
 
         int color;
         if (DISPLAY_TYPE.equals(DisplayType.STANDARD_BLUE)) {
-            color = mContext.getResources().getColor(R.color.blue);
+            color = mContext.getResources().getColor(R.color.white);
         } else {
             if ((pos / mWordSearchDimension) % 2 == 0)
                 color = mContext.getResources().getColor(pos % 2 == 0 ? R.color.blue : R.color.green);
@@ -89,11 +95,11 @@ public class WordSearchGridAdapter extends BaseAdapter {
             if (HIGHLIGHT_TYPE.equals(HighlightType.FULL_PURPLE_CIRCLE))
                 holder.textView.setBackgroundResource(R.drawable.grid_item_highlight_purple);
             else {
-                holder.textView.setBackgroundResource(R.drawable.grid_item_highlight_green);
-                holder.textView.setTextColor(mContext.getResources().getColor(R.color.green));
+                holder.textView.setBackgroundResource(R.drawable.grid_normal);
+             //   holder.textView.setTextColor(mContext.getResources().getColor(R.color.green));
             }
         } else {
-            holder.textView.setBackgroundResource(R.drawable.grid_normal);
+            holder.textView.setBackgroundResource(R.drawable.grid_item_solid);
         }
 
         return convertView;

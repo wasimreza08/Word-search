@@ -1,6 +1,14 @@
-<chrisjluc.onesearch.ui.components.GameBoldTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/grid_item"
-    android:text=" "
-    android:gravity="center"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="2dp"
+    android:padding="2dp">
+
+    <chrisjluc.onesearch.ui.components.GameBoldTextView
+        android:id="@+id/grid_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text=" " />
+
+</RelativeLayout>

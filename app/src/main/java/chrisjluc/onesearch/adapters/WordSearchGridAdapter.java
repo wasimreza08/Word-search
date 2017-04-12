@@ -43,7 +43,7 @@ public class WordSearchGridAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.grid_item, null);
-            holder.textView = (TextView) convertView;
+            holder.textView = (TextView) convertView.findViewById(R.id.grid_item);
             convertView.setTag(holder);
 
             holder.textView.setText("" + n.getLetter());

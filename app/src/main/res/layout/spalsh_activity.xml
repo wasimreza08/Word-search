@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <github.chenupt.springindicator.viewpager.ScrollerViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <github.chenupt.springindicator.SpringIndicator xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:siTextSize="14sp"
+            app:siIndicatorColors="@array/indicator_colors"
+            app:siTextBg="@drawable/indicator"
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="bottom"/>
+    </FrameLayout>
+
+</LinearLayout>

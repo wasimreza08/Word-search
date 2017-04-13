@@ -19,7 +19,8 @@
             android:label="@string/app_name" />
         <activity
             android:name=".ui.SplashActivity"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.splash"/>
         <activity
             android:name=".ui.ResultsActivity"
             android:label="@string/title_activity_results" />

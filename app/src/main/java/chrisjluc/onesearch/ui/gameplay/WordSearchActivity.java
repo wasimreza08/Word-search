@@ -47,7 +47,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         categoryId = R.string.ga_gameplay_screen;
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.wordsearch_activity);
         mGameState = GameState.START;
         findViewById(R.id.bSkip).setOnClickListener(this);

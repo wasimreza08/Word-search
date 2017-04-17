@@ -62,9 +62,9 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                     case GameDifficulty.Hard:
                         mLeaderboardId = getString(R.string.leaderboard_highest_scores__hard);
                         break;
-                    case GameDifficulty.Advanced:
+                    /*case GameDifficulty.Advanced:
                         mLeaderboardId = getString(R.string.leaderboard_highest_scores__advanced);
-                        break;
+                        break;*/
                 }
 
                 // Track number of played rounds

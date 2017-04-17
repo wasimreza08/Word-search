@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.google.android.gms.appstate.AppStateManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.Api.ApiOptions.NoOptions;
@@ -114,7 +113,6 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     // Api options to use when adding each API, null for none
     GamesOptions mGamesApiOptions = GamesOptions.builder().build();
     PlusOptions mPlusApiOptions = null;
-    NoOptions mAppStateApiOptions = null;
 
     // Google API client object we manage.
     GoogleApiClient mGoogleApiClient = null;
@@ -123,10 +121,9 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     public final static int CLIENT_NONE = 0x00;
     public final static int CLIENT_GAMES = 0x01;
     public final static int CLIENT_PLUS = 0x02;
-    public final static int CLIENT_APPSTATE = 0x04;
     public final static int CLIENT_SNAPSHOT = 0x08;
     public final static int CLIENT_ALL = CLIENT_GAMES | CLIENT_PLUS
-            | CLIENT_APPSTATE | CLIENT_SNAPSHOT;
+            | CLIENT_SNAPSHOT;
 
     // What clients were requested? (bit flags)
     int mRequestedClients = CLIENT_NONE;
@@ -245,15 +242,6 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     }
 
     /**
-     * Sets the options to pass when setting up the AppState API. Call before
-     * setup().
-     */
-    public void setAppStateApiOptions(NoOptions options) {
-        doApiOptionsPreCheck();
-        mAppStateApiOptions = options;
-    }
-
-    /**
      * Sets the options to pass when setting up the Plus API. Call before
      * setup().
      */
@@ -289,14 +277,9 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
             builder.addScope(Plus.SCOPE_PLUS_LOGIN);
         }
 
-        if (0 != (mRequestedClients & CLIENT_APPSTATE)) {
-            builder.addApi(AppStateManager.API);
-            builder.addScope(AppStateManager.SCOPE_APP_STATE);
-        }
-
         if (0 != (mRequestedClients & CLIENT_SNAPSHOT)) {
-          builder.addScope(Drive.SCOPE_APPFOLDER);
-          builder.addApi(Drive.API);
+            builder.addScope(Drive.SCOPE_APPFOLDER);
+            builder.addApi(Drive.API);
         }
 
         mGoogleApiClientBuilder = builder;
@@ -392,7 +375,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
                 mGoogleApiClient.connect();
             }
         } else {
-            debugLog("Not attempting to connect becase mConnectOnStart=false");
+            debugLog("Not attempting to connect because mConnectOnStart=false");
             debugLog("Instead, reporting a sign-in failure.");
             mHandler.postDelayed(new Runnable() {
                 @Override
@@ -510,7 +493,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
         if (!mGoogleApiClient.isConnected()) {
             Log.w(TAG, "Warning: getRequests() should only be called "
                     + "when signed in, "
-                    + "that is, after getting onSignInSuceeded()");
+                    + "that is, after getting onSignInSucceeded()");
         }
         return mRequests;
     }
@@ -773,7 +756,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
         SharedPreferences.Editor editor = mAppContext.getSharedPreferences(
                 GAMEHELPER_SHARED_PREFS, Context.MODE_PRIVATE).edit();
         editor.putInt(KEY_SIGN_IN_CANCELLATIONS, cancellations + 1);
-        editor.apply();
+        editor.commit();
         return cancellations + 1;
     }
 
@@ -783,7 +766,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
         SharedPreferences.Editor editor = mAppContext.getSharedPreferences(
                 GAMEHELPER_SHARED_PREFS, Context.MODE_PRIVATE).edit();
         editor.putInt(KEY_SIGN_IN_CANCELLATIONS, 0);
-        editor.apply();
+        editor.commit();
     }
 
     /** Handles a connection failure. */
@@ -880,6 +863,8 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
             // error.
             debugLog("resolveConnectionResult: result has no resolution. Giving up.");
             giveUp(new SignInFailureReason(mConnectionResult.getErrorCode()));
+
+            mConnectionResult = null;
         }
     }
 

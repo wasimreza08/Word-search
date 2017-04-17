@@ -13,10 +13,10 @@
     <string name="results_return_menu">Return to Menu</string>
     <string name="results_replay">Play Again</string>
     <!-- Google Play -->
-    <string name="app_id">149339585504</string>
-    <string name="leaderboard_highest_scores__easy">CgkI4PfUqqwEEAIQAA</string>
-    <string name="leaderboard_highest_scores__medium">CgkI4PfUqqwEEAIQAQ</string>
-    <string name="leaderboard_highest_scores__hard">CgkI4PfUqqwEEAIQAg</string>
+    <string name="app_id">390568743085</string>
+    <string name="leaderboard_highest_scores__easy">CgkIraHY_a4LEAIQAQ</string>
+    <string name="leaderboard_highest_scores__medium">CgkIraHY_a4LEAIQAg</string>
+    <string name="leaderboard_highest_scores__hard">CgkIraHY_a4LEAIQAw</string>
     <!--<string name="leaderboard_highest_scores__advanced">CggI9KDylmgQAhAE</string>-->
 
     <!-- Google Analytics -->

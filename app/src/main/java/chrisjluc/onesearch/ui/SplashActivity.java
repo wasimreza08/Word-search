@@ -3,6 +3,7 @@ package chrisjluc.onesearch.ui;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -33,8 +34,10 @@ import github.chenupt.springindicator.SpringIndicator;
 import github.chenupt.springindicator.viewpager.ScrollerViewPager;
 import me.relex.circleindicator.CircleIndicator;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewPager viewPager;
+    private final static String MENU_PREF_NAME = "menu_prefs";
+    private final static String FIRST_TIME = "first_time";
     private InstructionFragment ins1 = new InstructionFragment();
     private InstructionFragment2 ins2 = new InstructionFragment2();
     private InstructionFragment3 ins3 = new InstructionFragment3();
@@ -69,6 +72,16 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setFullscreen();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.bReadySplash){
+            SharedPreferences.Editor editor = getSharedPreferences(MENU_PREF_NAME,MODE_PRIVATE).edit();
+            editor.putBoolean(FIRST_TIME, false);
+            editor.apply();
+            finish();
+        }
     }
 
     protected void setFullscreen() {

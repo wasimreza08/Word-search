@@ -3,6 +3,7 @@ package chrisjluc.onesearch.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -23,6 +24,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
 
     private final static long ROUND_TIME_IN_MS = 60000;
     private BounceTouch bounceTouch;
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         setContentView(R.layout.activity_menu);
         bounceTouch = new BounceTouch(this);
         findViewById(R.id.settings).setOnTouchListener(bounceTouch);
-        findViewById(R.id.bMenuEasy).setOnClickListener(this);
+        findViewById(R.id.bMenuEasy).setOnTouchListener(bounceTouch);
         findViewById(R.id.bMenuMedium).setOnClickListener(this);
         findViewById(R.id.bMenuHard).setOnClickListener(this);
         //TODO: Reimplement advanced after more efficient way of drawing out the grid
@@ -57,6 +59,8 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         String gd = null;
         int ga_button_id = -1;
         switch (view.getId()) {
+            case R.id.settings:
+                return;
             case R.id.bMenuEasy:
                 gd = GameDifficulty.Easy;
                 ga_button_id = R.string.ga_click_easy;
@@ -77,8 +81,15 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         WordSearchManager wsm = WordSearchManager.getInstance();
         wsm.Initialize(new GameMode(GameType.Timed, gd, ROUND_TIME_IN_MS), getApplicationContext());
         wsm.buildWordSearches();
-        Intent i = new Intent(getApplicationContext(), WordSearchActivity.class);
-        startActivity(i);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(getApplicationContext(), WordSearchActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left );
+            }
+        }, 500);
+
     }
 
     @Override

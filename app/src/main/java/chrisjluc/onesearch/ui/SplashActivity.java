@@ -3,6 +3,7 @@ package chrisjluc.onesearch.ui;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -80,7 +81,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
             SharedPreferences.Editor editor = getSharedPreferences(MENU_PREF_NAME,MODE_PRIVATE).edit();
             editor.putBoolean(FIRST_TIME, false);
             editor.apply();
-            finish();
+            startActivity(new Intent(this, MenuActivity.class));
         }
     }
 

@@ -58,7 +58,7 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
         super.onStart();
         if (!mInSignInFlow) {
             // auto sign in
-            mGoogleApiClient.connect();
+             mGoogleApiClient.connect();
         }
     }
 

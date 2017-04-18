@@ -1,5 +1,6 @@
 package chrisjluc.onesearch.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import chrisjluc.onesearch.models.GameMode;
 import chrisjluc.onesearch.models.GameState;
 import chrisjluc.onesearch.models.GameType;
 import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
+import chrisjluc.onesearch.utils.DeviceUtils;
 
 public class MenuActivity extends BaseGooglePlayServicesActivity implements View.OnClickListener {
 
@@ -27,7 +29,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     private final static long ROUND_TIME_IN_MS = 60000;
     private BounceTouch bounceTouch;
     private ImageButton soundBtn;
-    private SharedPreferences prefs;
+
     private Handler mHandler = new Handler();
 
     @Override
@@ -56,8 +58,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     }
 
     private void setSound(){
-        prefs = getSharedPreferences(GameState.PREF_NAME, MODE_PRIVATE);
-        boolean sound = prefs.getBoolean(GameState.SOUND_PREF, true);
+        boolean sound = DeviceUtils.getSound(this);
         if(sound){
             soundBtn.setBackgroundResource(R.drawable.volume);
             soundBtn.setTag(R.drawable.volume);
@@ -67,12 +68,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         }
     }
 
-    private void writePref(boolean sound){
-        SharedPreferences.Editor editor = getSharedPreferences(GameState.PREF_NAME, MODE_PRIVATE).edit();
-        editor.putBoolean(GameState.SOUND_PREF, sound);
-        editor.apply();
-        setSound();
-    }
+
 
     @Override
     public void onClick(View view) {
@@ -88,10 +84,11 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         switch (view.getId()) {
             case R.id.sound:
                 if((int)soundBtn.getTag() == R.drawable.volume){
-                   writePref(false);
+                   DeviceUtils.setSound(this, false);
                 }else{
-                    writePref(true);
+                    DeviceUtils.setSound(this,true);
                 }
+                setSound();
                 return;
             case R.id.bMenuEasy:
                 gd = GameDifficulty.Easy;

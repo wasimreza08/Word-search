@@ -17,6 +17,7 @@ import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.models.GameState;
 import chrisjluc.onesearch.sound.AudioPlayer;
 import chrisjluc.onesearch.ui.ResultsActivity;
+import chrisjluc.onesearch.utils.DeviceUtils;
 
 public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
 
@@ -126,7 +127,11 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
     @Override
     public void notifyWordFound() {
-        AudioPlayer.getInstance().play(this, R.raw.winning_sound_effect);
+        boolean sound = DeviceUtils.getSound(this);
+        if(sound){
+            AudioPlayer.getInstance().play(this, R.raw.winning_sound_effect);
+        }
+
         mViewPager.setCurrentItem(currentItem);
         mScore = mScore + 10;
         mScoreTextView.setText(Integer.toString(mScore));
@@ -134,7 +139,11 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
     @Override
     public void notifyWordNotFound() {
-        AudioPlayer.getInstance().play(this, R.raw.wrong_found);
+        boolean sound = DeviceUtils.getSound(this);
+        if(sound){
+            AudioPlayer.getInstance().play(this, R.raw.wrong_found);
+        }
+
     }
 
     @Override

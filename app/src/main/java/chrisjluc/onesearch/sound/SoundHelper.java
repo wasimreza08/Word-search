@@ -32,7 +32,7 @@ public class SoundHelper {
         AssetFileDescriptor fileDescriptors = null;
         try {
       //      Log.d(TAG, "SoundHelper file name " + filename);
-            fileDescriptors = mgr.openFd("audio/"+filename);
+            fileDescriptors = mgr.openFd("sound/"+filename);
         } catch (IOException e) {
             e.printStackTrace();
         }

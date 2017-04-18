@@ -88,7 +88,7 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
 
         SharedPreferences prefs = getSharedPreferences(BGP_PREF_MAME, MODE_PRIVATE);
         boolean isFirstTime = prefs.getBoolean(FIRST_CONNECT, true);
-        if (isFirstTime) {
+    //    if (isFirstTime) {
             SharedPreferences.Editor editor = getSharedPreferences(BGP_PREF_MAME, MODE_PRIVATE).edit();
             editor.putBoolean(FIRST_CONNECT, false);
             editor.apply();
@@ -117,7 +117,7 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
             loadScoreOfLeaderBoardIfLarger(easyLeaderboardId, easyScore, GameDifficulty.Easy);
             loadScoreOfLeaderBoardIfLarger(mediumLeaderboardId, mediumScore, GameDifficulty.Medium);
             loadScoreOfLeaderBoardIfLarger(hardLeaderboardId, hardScore, GameDifficulty.Hard);
-        }
+        //}
     }
 
     private void loadScoreOfLeaderBoardIfLarger(final String leaderboardId, final int currentScore, final String gameDifficulty) {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,6 +15,7 @@ import chrisjluc.onesearch.adapters.WordSearchPagerAdapter;
 import chrisjluc.onesearch.base.BaseActivity;
 import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.models.GameState;
+import chrisjluc.onesearch.sound.AudioPlayer;
 import chrisjluc.onesearch.ui.ResultsActivity;
 
 public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
@@ -58,6 +60,8 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         currentItem = 0;
         mScore = 0;
         mSkipped = 0;
+        // Vibrate for 500 milliseconds
+
 
         // Create the adapter that will return a fragment for each of the
         // primary sections of the activity.
@@ -122,8 +126,15 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
     @Override
     public void notifyWordFound() {
+        AudioPlayer.getInstance().play(this, R.raw.winning_sound_effect);
         mViewPager.setCurrentItem(currentItem);
-        mScoreTextView.setText(Integer.toString(++mScore*10));
+        mScore = mScore + 10;
+        mScoreTextView.setText(Integer.toString(mScore));
+    }
+
+    @Override
+    public void notifyWordNotFound() {
+        AudioPlayer.getInstance().play(this, R.raw.wrong_found);
     }
 
     @Override
@@ -204,7 +215,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
                     public void onFinish() {
                         Intent i = new Intent(getApplicationContext(), ResultsActivity.class);
-                        i.putExtra("score", mScore*10);
+                        i.putExtra("score", mScore);
                         i.putExtra("skipped", mSkipped);
                         startActivity(i);
                         finish();
@@ -229,7 +240,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     }
 
     public int getScore() {
-        return mScore*=10;
+        return mScore;
     }
 
 }

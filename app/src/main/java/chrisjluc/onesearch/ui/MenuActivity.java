@@ -8,6 +8,7 @@ import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 
 import chrisjluc.onesearch.R;
+import chrisjluc.onesearch.animation.BounceTouch;
 import chrisjluc.onesearch.base.BaseGooglePlayServicesActivity;
 import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.models.GameDifficulty;
@@ -21,6 +22,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     private final static String FIRST_TIME = "first_time";
 
     private final static long ROUND_TIME_IN_MS = 60000;
+    private BounceTouch bounceTouch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,8 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         }
 
         setContentView(R.layout.activity_menu);
-
+        bounceTouch = new BounceTouch(this);
+        findViewById(R.id.settings).setOnTouchListener(bounceTouch);
         findViewById(R.id.bMenuEasy).setOnClickListener(this);
         findViewById(R.id.bMenuMedium).setOnClickListener(this);
         findViewById(R.id.bMenuHard).setOnClickListener(this);

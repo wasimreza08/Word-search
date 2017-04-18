@@ -82,6 +82,8 @@ public class WordSearchGridView extends GridView {
                 || mWordReverse.equals(selectedWord)) {
             mIsWordFound = true;
             mWordFoundListener.notifyWordFound();
+        }else{
+            mWordFoundListener.notifyWordNotFound();
         }
     }
 
@@ -228,5 +230,6 @@ public class WordSearchGridView extends GridView {
 
     public interface WordFoundListener {
         public void notifyWordFound();
+        public void notifyWordNotFound();
     }
 }

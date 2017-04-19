@@ -10,6 +10,7 @@ import android.media.MediaPlayer;
 public class AudioPlayer {
     private MediaPlayer
             mMediaPlayer;
+    private MediaPlayer mBackgroundMusic;
     private static AudioPlayer sAudioPlayer;
 
     public static AudioPlayer getInstance(){
@@ -26,6 +27,13 @@ public class AudioPlayer {
         }
     }
 
+    public void stopBackgroundMusic() {
+        if (mBackgroundMusic != null) {
+            mBackgroundMusic.release();
+            mBackgroundMusic = null;
+        }
+    }
+
     public void play(Context c, int rid) {
         stop();
 
@@ -38,5 +46,13 @@ public class AudioPlayer {
         });
 
         mMediaPlayer.start();
+    }
+
+    public void playBackgroundMusic(Context c, int rid){
+        stopBackgroundMusic();
+        mBackgroundMusic = MediaPlayer.create(c, rid);
+        mBackgroundMusic.setLooping(true);
+        mBackgroundMusic.setVolume(50, 50);
+        mBackgroundMusic.start();
     }
 }

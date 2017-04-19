@@ -8,12 +8,14 @@ import android.os.Vibrator;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.Random;
 
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.adapters.WordSearchPagerAdapter;
+import chrisjluc.onesearch.animation.BounceTouch;
 import chrisjluc.onesearch.base.BaseActivity;
 import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.models.GameState;
@@ -47,6 +49,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private int mScore;
     private int mSkipped;
     private Random rand = new Random();
+    private ImageButton soundBtn;
     private WordSearchPagerAdapter mWordSearchPagerAdapter;
 
     @Override
@@ -58,6 +61,8 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mGameState = GameState.START;
         findViewById(R.id.bSkip).setOnClickListener(this);
         findViewById(R.id.bPause).setOnClickListener(this);
+        soundBtn = (ImageButton) findViewById(R.id.sound);
+        soundBtn.setOnTouchListener(new BounceTouch(this));
         mTimerTextView = (TextView) findViewById(R.id.tvTimer);
         mScoreTextView = (TextView) findViewById(R.id.tvScore);
         mScoreTextView.setText("0");
@@ -121,6 +126,14 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
 
                 break;
+            case R.id.sound:
+                if((int)soundBtn.getTag() == R.drawable.volume){
+                    DeviceUtils.setSound(this, false);
+                }else{
+                    DeviceUtils.setSound(this,true);
+                }
+                setMusic();
+                break;
             case R.id.bPause:
                // analyticsTrackEvent(R.string.ga_click_pause);
                 pauseGameplay();
@@ -148,6 +161,20 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         }
 
     }
+
+    private void setMusic(){
+        boolean sound = DeviceUtils.getSound(this);
+        if(sound){
+            soundBtn.setBackgroundResource(R.drawable.volume);
+            soundBtn.setTag(R.drawable.volume);
+            AudioPlayer.getInstance().playBackgroundMusic(this, R.raw.game_background_music);
+        }else{
+            soundBtn.setBackgroundResource(R.drawable.mute);
+            soundBtn.setTag(R.drawable.mute);
+            AudioPlayer.getInstance().stopBackgroundMusic();
+        }
+    }
+
 
     private int randomNumber() {
         int randomNum = rand.nextInt((100 - 0) + 1) + 0;
@@ -214,6 +241,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     protected void onResume() {
         super.onResume();
+        setMusic();
         //analyticsTrackScreen(getString(categoryId));
         if (mGameState.equals(GameState.START) || mGameState.equals(GameState.FINISHED))
             mGameState = GameState.PLAY;
@@ -224,6 +252,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     protected void onPause() {
         super.onPause();
+        AudioPlayer.getInstance().stopBackgroundMusic();
         stopCountDownTimer();
     }
 

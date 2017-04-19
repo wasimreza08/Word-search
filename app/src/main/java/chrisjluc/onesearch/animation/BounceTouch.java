@@ -9,6 +9,7 @@ import android.view.View;
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.ui.MenuActivity;
 import chrisjluc.onesearch.ui.SplashActivity;
+import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
 
 /**
  * Created by bjit-16 on 4/18/17.
@@ -35,9 +36,12 @@ public class BounceTouch implements View.OnTouchListener {
                 BounceInterpolator interpolator = new BounceInterpolator(0.5, 20);
                 regainer.setInterpolator(interpolator);
                 regainer.start();
+
                 if(mContext instanceof MenuActivity){
                     ((MenuActivity)mContext).onClick(view);
-                } else if(mContext instanceof SplashActivity){
+                } else if(mContext instanceof WordSearchActivity){
+                    ((WordSearchActivity)mContext).onClick(view);
+                }else if(mContext instanceof SplashActivity){
                     ((SplashActivity)mContext).onClick(view);
                 }
 

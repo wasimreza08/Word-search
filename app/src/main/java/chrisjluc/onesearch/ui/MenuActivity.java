@@ -18,6 +18,7 @@ import chrisjluc.onesearch.models.GameDifficulty;
 import chrisjluc.onesearch.models.GameMode;
 import chrisjluc.onesearch.models.GameState;
 import chrisjluc.onesearch.models.GameType;
+import chrisjluc.onesearch.sound.AudioPlayer;
 import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
 import chrisjluc.onesearch.utils.DeviceUtils;
 
@@ -49,7 +50,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         bounceTouch = new BounceTouch(this);
         soundBtn = (ImageButton) findViewById(R.id.sound);
         soundBtn.setOnTouchListener(bounceTouch);
-        setSound();
+
         findViewById(R.id.bMenuEasy).setOnClickListener(this);
         findViewById(R.id.bMenuMedium).setOnClickListener(this);
         findViewById(R.id.bMenuHard).setOnClickListener(this);
@@ -62,9 +63,11 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         if(sound){
             soundBtn.setBackgroundResource(R.drawable.volume);
             soundBtn.setTag(R.drawable.volume);
+            AudioPlayer.getInstance().playBackgroundMusic(this, R.raw.menu_background_music);
         }else{
             soundBtn.setBackgroundResource(R.drawable.mute);
             soundBtn.setTag(R.drawable.mute);
+            AudioPlayer.getInstance().stopBackgroundMusic();
         }
     }
 
@@ -126,8 +129,15 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     @Override
     protected void onResume() {
         super.onResume();
+        setSound();
         //analyticsTrackScreen(getString(categoryId));
         WordSearchManager.nullify();
+    }
+
+    @Override
+    protected void onPause() {
+        AudioPlayer.getInstance().stopBackgroundMusic();
+        super.onPause();
     }
 
     @Override

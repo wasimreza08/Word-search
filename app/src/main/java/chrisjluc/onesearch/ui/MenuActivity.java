@@ -19,6 +19,7 @@ import chrisjluc.onesearch.models.GameMode;
 import chrisjluc.onesearch.models.GameState;
 import chrisjluc.onesearch.models.GameType;
 import chrisjluc.onesearch.sound.AudioPlayer;
+import chrisjluc.onesearch.sound.util.AudioManagerUtils;
 import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
 import chrisjluc.onesearch.utils.DeviceUtils;
 
@@ -58,18 +59,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
 //        findViewById(R.id.bMenuAdvanced).setOnClickListener(this);
     }
 
-    private void setSound(){
-        boolean sound = DeviceUtils.getSound(this);
-        if(sound){
-            soundBtn.setBackgroundResource(R.drawable.volume);
-            soundBtn.setTag(R.drawable.volume);
-            AudioPlayer.getInstance().playBackgroundMusic(this, R.raw.menu_background_music);
-        }else{
-            soundBtn.setBackgroundResource(R.drawable.mute);
-            soundBtn.setTag(R.drawable.mute);
-            AudioPlayer.getInstance().stopBackgroundMusic();
-        }
-    }
+
 
 
 
@@ -86,12 +76,8 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         long time = ROUND_TIME_IN_MS;
         switch (view.getId()) {
             case R.id.sound:
-                if((int)soundBtn.getTag() == R.drawable.volume){
-                   DeviceUtils.setSound(this, false);
-                }else{
-                    DeviceUtils.setSound(this,true);
-                }
-                setSound();
+                AudioManagerUtils.getInstance().soundToggle(this, soundBtn);
+                AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.menu_background_music);
                 return;
             case R.id.bMenuEasy:
                 gd = GameDifficulty.Easy;
@@ -129,14 +115,13 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     @Override
     protected void onResume() {
         super.onResume();
-        setSound();
-        //analyticsTrackScreen(getString(categoryId));
+        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.menu_background_music);        //analyticsTrackScreen(getString(categoryId));
         WordSearchManager.nullify();
     }
 
     @Override
     protected void onPause() {
-        AudioPlayer.getInstance().stopBackgroundMusic();
+        AudioManagerUtils.getInstance().stopBackgroundMusic();
         super.onPause();
     }
 

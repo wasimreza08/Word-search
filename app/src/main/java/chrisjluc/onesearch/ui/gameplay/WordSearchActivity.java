@@ -20,6 +20,7 @@ import chrisjluc.onesearch.base.BaseActivity;
 import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.models.GameState;
 import chrisjluc.onesearch.sound.AudioPlayer;
+import chrisjluc.onesearch.sound.util.AudioManagerUtils;
 import chrisjluc.onesearch.ui.ResultsActivity;
 import chrisjluc.onesearch.utils.DeviceUtils;
 
@@ -127,12 +128,8 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
                 break;
             case R.id.sound:
-                if((int)soundBtn.getTag() == R.drawable.volume){
-                    DeviceUtils.setSound(this, false);
-                }else{
-                    DeviceUtils.setSound(this,true);
-                }
-                setMusic();
+                AudioManagerUtils.getInstance().soundToggle(this, soundBtn);
+                AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music);
                 break;
             case R.id.bPause:
                // analyticsTrackEvent(R.string.ga_click_pause);
@@ -160,19 +157,6 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
             AudioPlayer.getInstance().play(this, loosingSound());
         }
 
-    }
-
-    private void setMusic(){
-        boolean sound = DeviceUtils.getSound(this);
-        if(sound){
-            soundBtn.setBackgroundResource(R.drawable.volume);
-            soundBtn.setTag(R.drawable.volume);
-            AudioPlayer.getInstance().playBackgroundMusic(this, R.raw.game_background_music);
-        }else{
-            soundBtn.setBackgroundResource(R.drawable.mute);
-            soundBtn.setTag(R.drawable.mute);
-            AudioPlayer.getInstance().stopBackgroundMusic();
-        }
     }
 
 
@@ -241,7 +225,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     protected void onResume() {
         super.onResume();
-        setMusic();
+        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music);
         //analyticsTrackScreen(getString(categoryId));
         if (mGameState.equals(GameState.START) || mGameState.equals(GameState.FINISHED))
             mGameState = GameState.PLAY;
@@ -252,7 +236,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     protected void onPause() {
         super.onPause();
-        AudioPlayer.getInstance().stopBackgroundMusic();
+        AudioManagerUtils.getInstance().stopBackgroundMusic();
         stopCountDownTimer();
     }
 

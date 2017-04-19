@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.util.Random;
+
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.adapters.WordSearchPagerAdapter;
 import chrisjluc.onesearch.base.BaseActivity;
@@ -129,7 +131,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     public void notifyWordFound() {
         boolean sound = DeviceUtils.getSound(this);
         if(sound){
-            AudioPlayer.getInstance().play(this, R.raw.winning_sound_effect);
+            AudioPlayer.getInstance().play(this, winningSound());
         }
 
         mViewPager.setCurrentItem(currentItem);
@@ -141,9 +143,43 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     public void notifyWordNotFound() {
         boolean sound = DeviceUtils.getSound(this);
         if(sound){
-            AudioPlayer.getInstance().play(this, R.raw.wrong_found);
+            AudioPlayer.getInstance().play(this, loosingSound());
         }
 
+    }
+
+    private int randomNumber(){
+        Random rand = new Random();;
+
+        // nextInt is normally exclusive of the top value,
+        // so add 1 to make it inclusive
+        int randomNum = rand.nextInt((100 - 0) + 1) + 0;
+
+        return randomNum;
+    }
+
+    private int winningSound(){
+        int rand = randomNumber();
+        if(rand%2 == 0){
+            return R.raw.winning_point_1;
+        } else if(rand%3 == 0){
+            return R.raw.wining_point_2;
+        } else{
+            return R.raw.wining_point_3;
+        }
+    }
+
+    private int loosingSound(){
+        int rand = randomNumber();
+        if(rand%2 == 0){
+            return R.raw.lossing_point_1;
+        } else if(rand%3 == 0){
+            return R.raw.loosing_point_2;
+        }else if(rand%5 == 0){
+            return R.raw.loosing_point_3;
+        } else{
+            return R.raw.loosing_point_4;
+        }
     }
 
     @Override

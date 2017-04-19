@@ -93,8 +93,8 @@
     </RelativeLayout>
     <ImageButton
         android:id="@+id/sound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="@drawable/volume"
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"

@@ -159,14 +159,14 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                 mGoogleApiClient.connect();
                 return;
             case R.id.bShowLeaderBoards:
-                analyticsTrackEvent(R.string.ga_click_leaderboard);
+                //analyticsTrackEvent(R.string.ga_click_leaderboard);
                 if (mGoogleApiClient != null && mGoogleApiClient.isConnected() && mLeaderboardId != null) {
                     startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
                             mLeaderboardId), REQUEST_LEADERBOARD);
                 }
                 return;
             case R.id.bShowAchievements:
-                analyticsTrackEvent(R.string.ga_click_achievement);
+                //analyticsTrackEvent(R.string.ga_click_achievement);
                 if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
                     startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), REQUEST_ACHIEVEMENTS);
                 }
@@ -175,12 +175,12 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
         }
         switch (view.getId()) {
             case R.id.bReplay:
-                analyticsTrackEvent(R.string.ga_click_replay);
+                //analyticsTrackEvent(R.string.ga_click_replay);
                 Intent intent = new Intent(getApplicationContext(), WordSearchActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bReturnMenu:
-                analyticsTrackEvent(R.string.ga_click_return_to_menu);
+               // analyticsTrackEvent(R.string.ga_click_return_to_menu);
                 break;
         }
         finish();
@@ -196,7 +196,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     @Override
     protected void onResume() {
         super.onResume();
-        analyticsTrackScreen(getString(categoryId));
+        //analyticsTrackScreen(getString(categoryId));
     }
 
     @Override

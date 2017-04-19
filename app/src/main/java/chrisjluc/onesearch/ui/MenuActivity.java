@@ -108,7 +108,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
 //                gd = GameDifficulty.Advanced;
 //                break;
         }
-        analyticsTrackEvent(ga_button_id);
+        //analyticsTrackEvent(ga_button_id);
         WordSearchManager wsm = WordSearchManager.getInstance();
         wsm.Initialize(new GameMode(GameType.Timed, gd, time), getApplicationContext());
         wsm.buildWordSearches();
@@ -126,7 +126,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     @Override
     protected void onResume() {
         super.onResume();
-        analyticsTrackScreen(getString(categoryId));
+        //analyticsTrackScreen(getString(categoryId));
         WordSearchManager.nullify();
     }
 

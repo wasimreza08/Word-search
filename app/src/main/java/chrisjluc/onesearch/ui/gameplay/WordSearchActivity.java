@@ -46,13 +46,14 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private long mRoundTime;
     private int mScore;
     private int mSkipped;
+    private Random rand = new Random();
     private WordSearchPagerAdapter mWordSearchPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         categoryId = R.string.ga_gameplay_screen;
-       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.wordsearch_activity);
         mGameState = GameState.START;
         findViewById(R.id.bSkip).setOnClickListener(this);
@@ -130,7 +131,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     public void notifyWordFound() {
         boolean sound = DeviceUtils.getSound(this);
-        if(sound){
+        if (sound) {
             AudioPlayer.getInstance().play(this, winningSound());
         }
 
@@ -142,42 +143,39 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     public void notifyWordNotFound() {
         boolean sound = DeviceUtils.getSound(this);
-        if(sound){
+        if (sound) {
             AudioPlayer.getInstance().play(this, loosingSound());
         }
 
     }
 
-    private int randomNumber(){
-        Random rand = new Random();;
-
-        // nextInt is normally exclusive of the top value,
-        // so add 1 to make it inclusive
+    private int randomNumber() {
         int randomNum = rand.nextInt((100 - 0) + 1) + 0;
-
         return randomNum;
     }
 
-    private int winningSound(){
+    private int winningSound() {
         int rand = randomNumber();
-        if(rand%2 == 0){
+        if (rand % 2 == 0) {
             return R.raw.winning_point_1;
-        } else if(rand%3 == 0){
+        } else if (rand % 3 == 0) {
             return R.raw.wining_point_2;
-        } else{
-            return R.raw.wining_point_3;
+        } else if (rand % 5 == 0) {
+            return R.raw.wining_point_2;
+        } else {
+            return R.raw.wining_point;
         }
     }
 
-    private int loosingSound(){
+    private int loosingSound() {
         int rand = randomNumber();
-        if(rand%2 == 0){
+        if (rand % 2 == 0) {
             return R.raw.lossing_point_1;
-        } else if(rand%3 == 0){
+        } else if (rand % 3 == 0) {
             return R.raw.loosing_point_2;
-        }else if(rand%5 == 0){
+        } else if (rand % 5 == 0) {
             return R.raw.loosing_point_3;
-        } else{
+        } else {
             return R.raw.loosing_point_4;
         }
     }

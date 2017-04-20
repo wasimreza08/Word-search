@@ -44,11 +44,11 @@ public class WordSearchFragment extends Fragment {
         mGrid = (WordSearchGridView) rootView.findViewById(R.id.gridView);
         mGrid.setWordFoundListener((WordSearchGridView.WordFoundListener) getActivity());
         tv.setText(mGrid.getWord());
-        speakOut();
+       // speakOut();
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-               // speakOut();
+                speakOut();
             }
         },500);
 
@@ -58,7 +58,10 @@ public class WordSearchFragment extends Fragment {
     public void speakOut(){
         if(DeviceUtils.getSound(getActivity()) == true  && getUserVisibleHint()){
             TextToSpeech ttObject= ((WordSearchActivity)getActivity()).getTTObject();
-            ttObject.speak(tv.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+            if(!ttObject.isSpeaking()){
+                ttObject.speak(tv.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+            }
+
         }
     }
 

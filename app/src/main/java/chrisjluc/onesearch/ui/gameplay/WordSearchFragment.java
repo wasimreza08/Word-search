@@ -2,12 +2,14 @@ package chrisjluc.onesearch.ui.gameplay;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import chrisjluc.onesearch.R;
+import chrisjluc.onesearch.utils.DeviceUtils;
 
 public class WordSearchFragment extends Fragment {
 
@@ -35,7 +37,15 @@ public class WordSearchFragment extends Fragment {
         mGrid = (WordSearchGridView) rootView.findViewById(R.id.gridView);
         mGrid.setWordFoundListener((WordSearchGridView.WordFoundListener) getActivity());
         tv.setText(mGrid.getWord());
+        speakOut();
         return rootView;
+    }
+
+    public void speakOut(){
+        if(DeviceUtils.getSound(getActivity()) == true){
+            TextToSpeech ttObject= ((WordSearchActivity)getActivity()).getTTObject();
+            ttObject.speak(mGrid.getWord(), TextToSpeech.QUEUE_FLUSH, null);
+        }
     }
 
     public void highlightWord() {

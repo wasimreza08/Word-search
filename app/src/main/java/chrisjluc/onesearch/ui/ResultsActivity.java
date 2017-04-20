@@ -93,6 +93,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
 
         TextView scoreTextView = (TextView) findViewById(R.id.tvScoreResult);
         scoreTextView.setText(Integer.toString(mScore));
+        final boolean isSoundOn = DeviceUtils.getSound(this);
         if (mGameMode != null) {
             SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
             int bestScore = prefs.getInt(SCORE_PREFIX + mGameMode.getDifficulty(), 0);
@@ -110,16 +111,20 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                 anim.setRepeatCount(8);
                 findViewById(R.id.tvBestScoreResultNotify).startAnimation(anim);
                 ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(mScore));
-                AudioPlayer.getInstance().play(this, R.raw.kids_scream);
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        AudioManagerUtils.getInstance().setSound(ResultsActivity.this, null, R.raw.result_sound, false);
+                if(isSoundOn) {
+                    AudioPlayer.getInstance().play(this, R.raw.kids_scream);
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            AudioManagerUtils.getInstance().setSound(ResultsActivity.this, null, R.raw.result_sound, false, 50);
 
-                    }
-                },2000);
+                        }
+                    }, 2000);
+                }
             } else {
-                AudioManagerUtils.getInstance().setSound(this, null, R.raw.result_sound, false);
+                if(isSoundOn) {
+                    AudioManagerUtils.getInstance().setSound(this, null, R.raw.result_sound, false, 50);
+                }
                 ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(bestScore));
             }
         }

@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.Locale;
 import java.util.Random;
 
 import chrisjluc.onesearch.R;
@@ -24,7 +26,8 @@ import chrisjluc.onesearch.sound.util.AudioManagerUtils;
 import chrisjluc.onesearch.ui.ResultsActivity;
 import chrisjluc.onesearch.utils.DeviceUtils;
 
-public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
+public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener,
+        PauseDialogFragment.PauseDialogListener, View.OnClickListener, TextToSpeech.OnInitListener {
 
     private final static boolean ON_SKIP_HIGHLIGHT_WORD = true;
     private final static long ON_SKIP_HIGHLIGHT_WORD_DELAY_IN_MS = 500;
@@ -67,10 +70,12 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mTimerTextView = (TextView) findViewById(R.id.tvTimer);
         mScoreTextView = (TextView) findViewById(R.id.tvScore);
         mScoreTextView.setText("0");
+        sTTobj = new TextToSpeech(this,this);
+
         currentItem = 0;
         mScore = 0;
         mSkipped = 0;
-        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true);
+        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true, 30);
         // Vibrate for 500 milliseconds
 
 
@@ -131,7 +136,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                 break;
             case R.id.sound:
                 AudioManagerUtils.getInstance().soundToggle(this, soundBtn);
-                AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true);
+                AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true, 30);
                 break;
             case R.id.bPause:
                // analyticsTrackEvent(R.string.ga_click_pause);
@@ -214,7 +219,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     public void onDialogRestart() {
         mGameState = GameState.PLAY;
         restart();
-        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true);
+        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true, 30);
     }
 
     private void restart() {
@@ -243,6 +248,11 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         super.onPause();
         AudioManagerUtils.getInstance().pauseBackgroundMusic();
         stopCountDownTimer();
+    }
+    private static TextToSpeech sTTobj;
+
+    public TextToSpeech getTTObject(){
+        return sTTobj;
     }
 
     @Override
@@ -305,4 +315,13 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         return mScore;
     }
 
+    @Override
+    public void onInit(int i) {
+        if(i != TextToSpeech.ERROR) {
+            sTTobj.setLanguage(Locale.US);
+        }
+        if (i == TextToSpeech.SUCCESS) {
+            ((WordSearchFragment) mWordSearchPagerAdapter.getFragmentFromCurrentItem(currentItem)).speakOut();
+        }
+    }
 }

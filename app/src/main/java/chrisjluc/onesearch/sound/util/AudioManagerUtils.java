@@ -22,7 +22,7 @@ public class AudioManagerUtils {
         return sAudioManagerUtils;
     }
 
-    public void setSound(Context context, ImageButton soundBtn, int backgroundSoundId, boolean loop){
+    public void setSound(Context context, ImageButton soundBtn, int backgroundSoundId, boolean loop, int volume){
         boolean sound = DeviceUtils.getSound(context);
         if(sound){
             if(soundBtn != null){
@@ -30,7 +30,7 @@ public class AudioManagerUtils {
                 soundBtn.setTag(R.drawable.volume);
             }
 
-            AudioPlayer.getInstance().playBackgroundMusic(context,backgroundSoundId, loop);
+            AudioPlayer.getInstance().playBackgroundMusic(context,backgroundSoundId, loop, volume);
         }else{
             if(soundBtn != null) {
                 soundBtn.setBackgroundResource(R.drawable.mute);

@@ -48,11 +48,11 @@ public class AudioPlayer {
         mMediaPlayer.start();
     }
 
-    public void playBackgroundMusic(Context c, int rid, boolean loop){
+    public void playBackgroundMusic(Context c, int rid, boolean loop, int volume){
         stopBackgroundMusic();
         mBackgroundMusic = MediaPlayer.create(c, rid);
         mBackgroundMusic.setLooping(loop);
-        mBackgroundMusic.setVolume(50, 50);
+        mBackgroundMusic.setVolume(volume, volume);
         mBackgroundMusic.start();
     }
     public void musicPause(){

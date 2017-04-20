@@ -18,6 +18,7 @@ public class WordSearchFragment extends Fragment {
 
     private WordSearchGridView mGrid;
     private Handler mHandler = new Handler();
+    private TextView tv;
 
     public static WordSearchFragment newInstance(int sectionNumber) {
         WordSearchFragment fragment = new WordSearchFragment();
@@ -39,14 +40,15 @@ public class WordSearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.wordsearch_fragment, container, false);
-        TextView tv = (TextView) rootView.findViewById(R.id.section_label);
+        tv = (TextView) rootView.findViewById(R.id.section_label);
         mGrid = (WordSearchGridView) rootView.findViewById(R.id.gridView);
         mGrid.setWordFoundListener((WordSearchGridView.WordFoundListener) getActivity());
         tv.setText(mGrid.getWord());
+        speakOut();
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                speakOut();
+               // speakOut();
             }
         },500);
 
@@ -54,9 +56,9 @@ public class WordSearchFragment extends Fragment {
     }
 
     public void speakOut(){
-        if(DeviceUtils.getSound(getActivity()) == true){
+        if(DeviceUtils.getSound(getActivity()) == true  && getUserVisibleHint()){
             TextToSpeech ttObject= ((WordSearchActivity)getActivity()).getTTObject();
-            ttObject.speak(mGrid.getWord(), TextToSpeech.QUEUE_FLUSH, null);
+            ttObject.speak(tv.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 

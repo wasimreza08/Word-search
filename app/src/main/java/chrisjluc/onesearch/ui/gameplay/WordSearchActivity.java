@@ -249,7 +249,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         AudioManagerUtils.getInstance().pauseBackgroundMusic();
         stopCountDownTimer();
     }
-    private static TextToSpeech sTTobj;
+    private  TextToSpeech sTTobj;
 
     public TextToSpeech getTTObject(){
         return sTTobj;

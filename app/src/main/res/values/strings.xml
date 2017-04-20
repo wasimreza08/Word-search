@@ -17,6 +17,11 @@
     <string name="leaderboard_highest_scores__easy">CgkIraHY_a4LEAIQAQ</string>
     <string name="leaderboard_highest_scores__medium">CgkIraHY_a4LEAIQAg</string>
     <string name="leaderboard_highest_scores__hard">CgkIraHY_a4LEAIQAw</string>
+    <string name="beginner_achievement">CgkIraHY_a4LEAIQBA</string>
+    <string name="intermediate_achievement">CgkIraHY_a4LEAIQBQ</string>
+    <string name="experienced_achievement">CgkIraHY_a4LEAIQBg</string>
+    <string name="specialist_achievement">CgkIraHY_a4LEAIQBw</string>
+    <string name="expert_achievement">CgkIraHY_a4LEAIQCA</string>
     <!--<string name="leaderboard_highest_scores__advanced">CggI9KDylmgQAhAE</string>-->
 
     <!-- Google Analytics -->

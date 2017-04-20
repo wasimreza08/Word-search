@@ -19,6 +19,7 @@ import chrisjluc.onesearch.models.GameAchievement;
 import chrisjluc.onesearch.models.GameDifficulty;
 import chrisjluc.onesearch.models.GameMode;
 import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
+import chrisjluc.onesearch.utils.DeviceUtils;
 
 public class ResultsActivity extends BaseGooglePlayServicesActivity implements View.OnClickListener {
 
@@ -35,6 +36,11 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     private int mScore = -1;
     private int mPreviousBestScore = -1;
     private int mSkipped = -1;
+    private static final int BEGINNER = 10;
+    private static final int INTERMEDIATE = 25;
+    private static final int EXPERIENCED = 50;
+    private static final int SPECIALIST = 100;
+    private static final int EXPERT = 200;
     private GameMode mGameMode;
 
     @Override
@@ -113,7 +119,24 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
         }
     }
 
-    private void updateAchievements() {
+    private void updateAchievements(){
+        int achievement = DeviceUtils.getAchievement(this);
+        achievement++;
+        DeviceUtils.setAchievement(this, achievement);
+        if(achievement <= BEGINNER){
+            Games.Achievements.increment(mGoogleApiClient, getString(R.string.beginner_achievement),1);
+        } else if(achievement <= INTERMEDIATE){
+            Games.Achievements.increment(mGoogleApiClient, getString(R.string.intermediate_achievement),1);
+        } else if(achievement <= EXPERIENCED){
+            Games.Achievements.increment(mGoogleApiClient, getString(R.string.experienced_achievement),1);
+        } else if(achievement <= SPECIALIST){
+            Games.Achievements.increment(mGoogleApiClient, getString(R.string.specialist_achievement),1);
+        } else if(achievement <= EXPERT){
+            Games.Achievements.increment(mGoogleApiClient, getString(R.string.expert_achievement),1);
+        }
+    }
+
+  /*  private void updateAchievements() {
         int score = Math.max(mPreviousBestScore, mScore);
         SparseArray<String> achievementsMap = null;
         switch (mGameMode.getDifficulty()) {
@@ -148,7 +171,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
             editor.putInt(HIGHEST_SCORE_FOR_ACHIEVEMENT_PREFIX + mGameMode.getDifficulty(), score);
             editor.apply();
         }
-    }
+    }*/
 
     @Override
     public void onClick(View view) {

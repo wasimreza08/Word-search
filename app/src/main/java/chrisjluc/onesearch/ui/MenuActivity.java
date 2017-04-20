@@ -1,6 +1,7 @@
 package chrisjluc.onesearch.ui;
 
-import android.content.Context;
+import com.google.android.gms.common.ConnectionResult;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,20 +9,15 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.google.android.gms.common.ConnectionResult;
-
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.animation.BounceTouch;
 import chrisjluc.onesearch.base.BaseGooglePlayServicesActivity;
 import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.models.GameDifficulty;
 import chrisjluc.onesearch.models.GameMode;
-import chrisjluc.onesearch.models.GameState;
 import chrisjluc.onesearch.models.GameType;
-import chrisjluc.onesearch.sound.AudioPlayer;
 import chrisjluc.onesearch.sound.util.AudioManagerUtils;
 import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
-import chrisjluc.onesearch.utils.DeviceUtils;
 
 public class MenuActivity extends BaseGooglePlayServicesActivity implements View.OnClickListener {
 

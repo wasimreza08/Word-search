@@ -42,4 +42,15 @@ public class DeviceUtils {
         editor.putBoolean(GameState.SOUND_PREF, sound);
         editor.apply();
     }
+
+    public static int getAchievement(Context context){
+        SharedPreferences prefs = context.getSharedPreferences(GameState.PREF_NAME, context.MODE_PRIVATE);
+        return prefs.getInt(GameState.ACHIEVEMENT, 0);
+    }
+
+    public static void setAchievement(Context context, int sound){
+        SharedPreferences.Editor editor = context.getSharedPreferences(GameState.PREF_NAME, context.MODE_PRIVATE).edit();
+        editor.putInt(GameState.ACHIEVEMENT, sound);
+        editor.apply();
+    }
 }

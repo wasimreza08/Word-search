@@ -2,6 +2,7 @@ package chrisjluc.onesearch.ui.gameplay;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ public class WordSearchFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private WordSearchGridView mGrid;
+    private Handler mHandler = new Handler();
 
     public static WordSearchFragment newInstance(int sectionNumber) {
         WordSearchFragment fragment = new WordSearchFragment();
@@ -28,6 +30,10 @@ public class WordSearchFragment extends Fragment {
     public WordSearchFragment() {
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +43,13 @@ public class WordSearchFragment extends Fragment {
         mGrid = (WordSearchGridView) rootView.findViewById(R.id.gridView);
         mGrid.setWordFoundListener((WordSearchGridView.WordFoundListener) getActivity());
         tv.setText(mGrid.getWord());
-        speakOut();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                speakOut();
+            }
+        },500);
+
         return rootView;
     }
 

@@ -71,7 +71,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mScoreTextView = (TextView) findViewById(R.id.tvScore);
         mScoreTextView.setText("0");
         sTTobj = new TextToSpeech(this,this);
-
+        sTTobj.setSpeechRate(0.5f);
         currentItem = 0;
         mScore = 0;
         mSkipped = 0;

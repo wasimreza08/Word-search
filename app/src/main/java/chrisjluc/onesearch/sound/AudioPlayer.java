@@ -12,6 +12,7 @@ public class AudioPlayer {
             mMediaPlayer;
     private MediaPlayer mBackgroundMusic;
     private static AudioPlayer sAudioPlayer;
+    private int length;
 
     public static AudioPlayer getInstance(){
         if(sAudioPlayer == null){
@@ -36,7 +37,6 @@ public class AudioPlayer {
 
     public void play(Context c, int rid) {
         stop();
-
         mMediaPlayer = MediaPlayer.create(c, rid);
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -48,11 +48,23 @@ public class AudioPlayer {
         mMediaPlayer.start();
     }
 
-    public void playBackgroundMusic(Context c, int rid){
+    public void playBackgroundMusic(Context c, int rid, boolean loop){
         stopBackgroundMusic();
         mBackgroundMusic = MediaPlayer.create(c, rid);
-        mBackgroundMusic.setLooping(true);
+        mBackgroundMusic.setLooping(loop);
         mBackgroundMusic.setVolume(50, 50);
         mBackgroundMusic.start();
+    }
+    public void musicPause(){
+        if(mBackgroundMusic != null){
+            mBackgroundMusic.pause();
+            length = mBackgroundMusic.getCurrentPosition();
+        }
+    }
+    public void musicResume(){
+        if(mBackgroundMusic != null){
+            mBackgroundMusic.seekTo(length);
+            mBackgroundMusic.start();
+        }
     }
 }

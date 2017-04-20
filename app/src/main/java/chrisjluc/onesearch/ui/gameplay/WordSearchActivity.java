@@ -70,6 +70,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         currentItem = 0;
         mScore = 0;
         mSkipped = 0;
+        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true);
         // Vibrate for 500 milliseconds
 
 
@@ -101,6 +102,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mGameState = GameState.PAUSE;
         stopCountDownTimer();
         mPauseDialogFragment.show(getFragmentManager(), "dialog");
+        AudioManagerUtils.getInstance().pauseBackgroundMusic();
     }
 
     @Override
@@ -129,7 +131,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                 break;
             case R.id.sound:
                 AudioManagerUtils.getInstance().soundToggle(this, soundBtn);
-                AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music);
+                AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true);
                 break;
             case R.id.bPause:
                // analyticsTrackEvent(R.string.ga_click_pause);
@@ -203,12 +205,16 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         setupCountDownTimer(mTimeRemaining);
         startCountDownTimer();
         setFullscreen();
+        AudioManagerUtils.getInstance().resumeBackgroundMusic();
+
+
     }
 
     @Override
     public void onDialogRestart() {
         mGameState = GameState.PLAY;
         restart();
+        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true);
     }
 
     private void restart() {
@@ -225,7 +231,6 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     protected void onResume() {
         super.onResume();
-        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music);
         //analyticsTrackScreen(getString(categoryId));
         if (mGameState.equals(GameState.START) || mGameState.equals(GameState.FINISHED))
             mGameState = GameState.PLAY;
@@ -236,7 +241,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     protected void onPause() {
         super.onPause();
-        AudioManagerUtils.getInstance().stopBackgroundMusic();
+        AudioManagerUtils.getInstance().pauseBackgroundMusic();
         stopCountDownTimer();
     }
 

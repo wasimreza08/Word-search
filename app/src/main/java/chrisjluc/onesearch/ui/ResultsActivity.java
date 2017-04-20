@@ -3,6 +3,7 @@ package chrisjluc.onesearch.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -18,6 +19,8 @@ import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.models.GameAchievement;
 import chrisjluc.onesearch.models.GameDifficulty;
 import chrisjluc.onesearch.models.GameMode;
+import chrisjluc.onesearch.sound.AudioPlayer;
+import chrisjluc.onesearch.sound.util.AudioManagerUtils;
 import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
 import chrisjluc.onesearch.utils.DeviceUtils;
 
@@ -42,6 +45,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     private static final int SPECIALIST = 100;
     private static final int EXPERT = 200;
     private GameMode mGameMode;
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +93,6 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
 
         TextView scoreTextView = (TextView) findViewById(R.id.tvScoreResult);
         scoreTextView.setText(Integer.toString(mScore));
-
         if (mGameMode != null) {
             SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
             int bestScore = prefs.getInt(SCORE_PREFIX + mGameMode.getDifficulty(), 0);
@@ -101,13 +104,22 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
 
                 findViewById(R.id.tvBestScoreResultNotify).setVisibility(View.VISIBLE);
                 Animation anim = new AlphaAnimation(1.0f, 0.0f);
-                anim.setDuration(200);
+                anim.setDuration(500);
                 anim.setStartOffset(0);
                 anim.setRepeatMode(Animation.REVERSE);
-                anim.setRepeatCount(6);
+                anim.setRepeatCount(8);
                 findViewById(R.id.tvBestScoreResultNotify).startAnimation(anim);
                 ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(mScore));
+                AudioPlayer.getInstance().play(this, R.raw.kids_scream);
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        AudioManagerUtils.getInstance().setSound(ResultsActivity.this, null, R.raw.result_sound, false);
+
+                    }
+                },2000);
             } else {
+                AudioManagerUtils.getInstance().setSound(this, null, R.raw.result_sound, false);
                 ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(bestScore));
             }
         }
@@ -219,6 +231,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     @Override
     protected void onResume() {
         super.onResume();
+
         //analyticsTrackScreen(getString(categoryId));
     }
 

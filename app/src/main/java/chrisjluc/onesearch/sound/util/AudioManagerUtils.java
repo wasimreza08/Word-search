@@ -22,16 +22,21 @@ public class AudioManagerUtils {
         return sAudioManagerUtils;
     }
 
-    public void setSound(Context context, ImageButton soundBtn, int backgroundSoundId){
+    public void setSound(Context context, ImageButton soundBtn, int backgroundSoundId, boolean loop){
         boolean sound = DeviceUtils.getSound(context);
         if(sound){
-            soundBtn.setBackgroundResource(R.drawable.volume);
-            soundBtn.setTag(R.drawable.volume);
-            AudioPlayer.getInstance().playBackgroundMusic(context,backgroundSoundId);
+            if(soundBtn != null){
+                soundBtn.setBackgroundResource(R.drawable.volume);
+                soundBtn.setTag(R.drawable.volume);
+            }
+
+            AudioPlayer.getInstance().playBackgroundMusic(context,backgroundSoundId, loop);
         }else{
-            soundBtn.setBackgroundResource(R.drawable.mute);
-            soundBtn.setTag(R.drawable.mute);
-            AudioPlayer.getInstance().stopBackgroundMusic();
+            if(soundBtn != null) {
+                soundBtn.setBackgroundResource(R.drawable.mute);
+                soundBtn.setTag(R.drawable.mute);
+            }
+            stopBackgroundMusic();
         }
     }
 
@@ -46,5 +51,13 @@ public class AudioManagerUtils {
     public void stopBackgroundMusic(){
         AudioPlayer.getInstance().stopBackgroundMusic();
     }
+    public void pauseBackgroundMusic(){
+        AudioPlayer.getInstance().musicPause();
+    }
+
+    public void resumeBackgroundMusic(){
+        AudioPlayer.getInstance().musicResume();
+    }
+
 
 }

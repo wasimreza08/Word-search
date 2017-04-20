@@ -79,7 +79,7 @@ public class WordSearchGridView extends GridView {
     private void isWordFound() {
         String selectedWord = getSelectedString();
         if (selectedWord != null && mWord.equals(selectedWord)
-                || mWordReverse.equals(selectedWord)) {
+                /*|| mWordReverse.equals(selectedWord)*/) {
             mIsWordFound = true;
             mWordFoundListener.notifyWordFound();
         }else{

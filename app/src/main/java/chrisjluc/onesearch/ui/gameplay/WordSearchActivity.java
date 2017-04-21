@@ -200,9 +200,9 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         } else if (rand % 3 == 0) {
             return R.raw.wrong_answer_base;
         } else if (rand % 5 == 0) {
-            return R.raw.lossing_point_1;
+            return R.raw.wrong_answer_base;
         } else {
-            return R.raw.loosing_point_4;
+            return R.raw.wrong_light_bass;
         }
     }
 

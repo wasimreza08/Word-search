@@ -48,10 +48,14 @@ public class AudioPlayer {
         mMediaPlayer.start();
     }
 
-    public void playBackgroundMusic(Context c, int rid, boolean loop, int volume){
+    private final static int MAX_VOLUME = 100;
+
+    public void playBackgroundMusic(Context c, int rid, boolean loop, int volumeInt){
         stopBackgroundMusic();
+
         mBackgroundMusic = MediaPlayer.create(c, rid);
         mBackgroundMusic.setLooping(loop);
+        final float volume = (float) (1 - (Math.log(MAX_VOLUME - volumeInt) / Math.log(MAX_VOLUME)));
         mBackgroundMusic.setVolume(volume, volume);
         mBackgroundMusic.start();
     }

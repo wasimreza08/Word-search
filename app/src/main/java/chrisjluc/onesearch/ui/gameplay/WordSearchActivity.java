@@ -76,7 +76,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         currentItem = 0;
         mScore = 0;
         mSkipped = 0;
-        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true, 30);
+        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true, 90);
         // Vibrate for 500 milliseconds
 
 
@@ -137,7 +137,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                 break;
             case R.id.sound:
                 AudioManagerUtils.getInstance().soundToggle(this, soundBtn);
-                AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true, 30);
+                AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true, 90);
                 break;
             case R.id.bPause:
                // analyticsTrackEvent(R.string.ga_click_pause);
@@ -185,11 +185,11 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private int winningSound() {
         int rand = randomNumber();
         if (rand % 2 == 0) {
-            return R.raw.wining_point;
+            return R.raw.hi_win;
         } else if (rand % 3 == 0) {
-            return R.raw.wining_point_2;
+            return R.raw.hi_win;
         } else {
-            return R.raw.wining_point_3;
+            return R.raw.low_win;
         }
     }
 
@@ -227,7 +227,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     public void onDialogRestart() {
         mGameState = GameState.PLAY;
         restart();
-        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true, 30);
+        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true, 90);
     }
 
     private void restart() {

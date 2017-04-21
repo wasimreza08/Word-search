@@ -73,7 +73,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         switch (view.getId()) {
             case R.id.sound:
                 AudioManagerUtils.getInstance().soundToggle(this, soundBtn);
-                AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.menu_background_music, true, 50);
+                AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.menu_background_music, true, 100);
                 return;
             case R.id.bMenuEasy:
                 gd = GameDifficulty.Easy;
@@ -111,7 +111,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     @Override
     protected void onResume() {
         super.onResume();
-        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.menu_background_music, true, 50);        //analyticsTrackScreen(getString(categoryId));
+        AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.menu_background_music, true, 100);        //analyticsTrackScreen(getString(categoryId));
         WordSearchManager.nullify();
     }
 

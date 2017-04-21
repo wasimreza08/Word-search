@@ -116,14 +116,14 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            AudioManagerUtils.getInstance().setSound(ResultsActivity.this, null, R.raw.result_sound, false, 50);
+                            AudioManagerUtils.getInstance().setSound(ResultsActivity.this, null, R.raw.result_sound, false, 100);
 
                         }
                     }, 2000);
                 }
             } else {
                 if(isSoundOn) {
-                    AudioManagerUtils.getInstance().setSound(this, null, R.raw.result_sound, false, 50);
+                    AudioManagerUtils.getInstance().setSound(this, null, R.raw.result_sound, false, 100);
                 }
                 ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(bestScore));
             }

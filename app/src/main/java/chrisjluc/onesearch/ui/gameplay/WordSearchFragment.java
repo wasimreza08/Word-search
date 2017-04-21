@@ -56,6 +56,7 @@ public class WordSearchFragment extends Fragment {
     }
 
     public void speakOut(){
+        if(getActivity() == null)return;
         if(DeviceUtils.getSound(getActivity()) == true  && getUserVisibleHint()){
             TextToSpeech ttObject= ((WordSearchActivity)getActivity()).getTTObject();
             if(ttObject.isSpeaking()){

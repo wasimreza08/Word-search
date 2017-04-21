@@ -196,11 +196,11 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private int loosingSound() {
         int rand = randomNumber();
         if (rand % 2 == 0) {
-            return R.raw.lossing_point_1;
+            return R.raw.wrong_answer_base;
         } else if (rand % 3 == 0) {
-            return R.raw.loosing_point_2;
+            return R.raw.wrong_answer_base;
         } else if (rand % 5 == 0) {
-            return R.raw.loosing_point_3;
+            return R.raw.lossing_point_1;
         } else {
             return R.raw.loosing_point_4;
         }

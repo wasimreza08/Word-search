@@ -3,6 +3,8 @@ package chrisjluc.onesearch.wordSearchGenerator.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import chrisjluc.onesearch.utils.CommonUtil;
+
 public class Node {
     /**
      * '0' means letter hasn't been set
@@ -10,6 +12,16 @@ public class Node {
     private char letter = '0';
     private List<PossibleInstance> possibleInstances = null;
     private boolean isHighlighted;
+
+    public int getHightLightStatus() {
+        return hightLightStatus;
+    }
+
+    public void setHightLightStatus(int hightLightStatus) {
+        this.hightLightStatus = hightLightStatus;
+    }
+
+    private int hightLightStatus = CommonUtil.WORD_NORMAL;
 
     public Node() {
     }

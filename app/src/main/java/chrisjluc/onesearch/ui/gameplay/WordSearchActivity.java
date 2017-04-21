@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.view.ViewPager;
@@ -145,16 +146,25 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         }
     }
 
+    private Handler mHandler = new Handler();
+
     @Override
     public void notifyWordFound() {
         boolean sound = DeviceUtils.getSound(this);
         if (sound) {
             AudioPlayer.getInstance().play(this, winningSound());
         }
-
-        mViewPager.setCurrentItem(currentItem);
         mScore = mScore + 10;
         mScoreTextView.setText(Integer.toString(mScore));
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(mViewPager != null){
+                    mViewPager.setCurrentItem(currentItem);
+                }
+            }
+        }, 200);
+
     }
 
     @Override

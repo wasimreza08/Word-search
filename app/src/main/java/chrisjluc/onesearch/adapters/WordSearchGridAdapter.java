@@ -5,11 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.framework.WordSearchManager;
+import chrisjluc.onesearch.utils.CommonUtil;
 import chrisjluc.onesearch.utils.DeviceUtils;
 import chrisjluc.onesearch.wordSearchGenerator.models.Node;
 
@@ -91,7 +91,16 @@ public class WordSearchGridAdapter extends BaseAdapter {
         }
         holder.textView.setTextColor(color);
 
-        if (n.isHighlighted()) {
+        if(n.getHightLightStatus() == CommonUtil.WORD_NORMAL){
+            holder.textView.setBackgroundResource(R.drawable.grid_item_normal);
+        } else if(n.getHightLightStatus() == CommonUtil.WORD_FOUND_HIGHLIGHT){
+            holder.textView.setBackgroundResource(R.drawable.grid_word_found_highlight);
+        } else if(n.getHightLightStatus() == CommonUtil.WORD_NOT_FOUND_HIGHLIGHT){
+            holder.textView.setBackgroundResource(R.drawable.grid_item_word_not_found_highlight);
+        }
+
+
+       /* if (n.isHighlighted()) {
             if (HIGHLIGHT_TYPE.equals(HighlightType.FULL_PURPLE_CIRCLE))
                 holder.textView.setBackgroundResource(R.drawable.grid_item_highlight_purple);
             else {
@@ -100,7 +109,7 @@ public class WordSearchGridAdapter extends BaseAdapter {
             }
         } else {
             holder.textView.setBackgroundResource(R.drawable.grid_item_highlight_purple);
-        }
+        }*/
 
         return convertView;
     }

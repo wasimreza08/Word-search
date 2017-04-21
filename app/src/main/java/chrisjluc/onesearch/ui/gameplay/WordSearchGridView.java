@@ -1,6 +1,7 @@
 package chrisjluc.onesearch.ui.gameplay;
 
 import android.content.Context;
+import android.transition.CircularPropagation;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -12,6 +13,7 @@ import java.util.List;
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.adapters.WordSearchGridAdapter;
 import chrisjluc.onesearch.framework.WordSearchManager;
+import chrisjluc.onesearch.utils.CommonUtil;
 import chrisjluc.onesearch.wordSearchGenerator.generators.StringUtils;
 import chrisjluc.onesearch.wordSearchGenerator.generators.WordSearchGenerator;
 import chrisjluc.onesearch.wordSearchGenerator.models.Node;
@@ -82,6 +84,7 @@ public class WordSearchGridView extends GridView {
                 /*|| mWordReverse.equals(selectedWord)*/) {
             mIsWordFound = true;
             mWordFoundListener.notifyWordFound();
+            wordFoundHighLight();
         }else{
             mWordFoundListener.notifyWordNotFound();
         }
@@ -120,13 +123,15 @@ public class WordSearchGridView extends GridView {
 
     public void highlightWord() {
         mStartDrag = mWordStart;
-        updateCurrentHighlightedNodes(mWordEnd);
+        updateCurrentHighlightedNodes(mWordEnd, true);
     }
 
-    private void updateCurrentHighlightedNodes(Point p) {
+    private void updateCurrentHighlightedNodes(Point p, boolean isFound) {
         if (p.y < 0 || p.y >= mYLength || p.x < 0 || p.x >= mXLength) return;
 
-        if (p.equals(mEndDrag)) return;
+        if (p.equals(mEndDrag)){
+            return;
+        }
 
         mEndDrag = p;
 
@@ -167,25 +172,60 @@ public class WordSearchGridView extends GridView {
             if (index < 0 || index >= mWordSearchNodes.length)
                 continue;
             Node n = mWordSearchNodes[index];
+            if(isFound){
+                n.setHighlighted(true);
+                n.setHightLightStatus(CommonUtil.WORD_FOUND_HIGHLIGHT);
+            } else{
+                n.setHighlighted(false);
+                n.setHightLightStatus(CommonUtil.WORD_NOT_FOUND_HIGHLIGHT);
+            }
+
             mWordSearchHighlightedNodes.add(n);
-            n.setHighlighted(true);
         }
         mAdapter.notifyDataSetChanged();
     }
 
     private void clearHighlightedNodes() {
-        for (Node n : mWordSearchHighlightedNodes)
+        for (Node n : mWordSearchHighlightedNodes){
             n.setHighlighted(false);
+            n.setHightLightStatus(CommonUtil.WORD_NORMAL);
+        }
+
         mWordSearchHighlightedNodes.clear();
     }
 
+    private void wordFoundHighLight(){
+        if(mWordSearchHighlightedNodes != null && mWordSearchHighlightedNodes.size() != 0){
+            for (Node n : mWordSearchHighlightedNodes){
+                n.setHighlighted(true);
+                n.setHightLightStatus(CommonUtil.WORD_FOUND_HIGHLIGHT);
+            }
+            mWordSearchHighlightedNodes.clear();
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
     private void clearHighlighedNodesAndNotifyAdapter() {
-        for (Node n : mWordSearchHighlightedNodes)
+       // wrongWordHighlight();
+        for (Node n : mWordSearchHighlightedNodes){
             n.setHighlighted(false);
+            n.setHightLightStatus(CommonUtil.WORD_NORMAL);
+        }
         mWordSearchHighlightedNodes.clear();
         mAdapter.notifyDataSetChanged();
     }
 
+   /* private void wrongWordHighlight() throws InterruptedException {
+        for (Node n : mWordSearchHighlightedNodes){
+            n.setHighlighted(false);
+            n.setHightLightStatus(CommonUtil.WORD_NOT_FOUND_HIGHLIGHT);
+        }
+
+      //  mWordSearchHighlightedNodes.clear();
+        mAdapter.notifyDataSetChanged();
+      //  Thread.sleep(200);
+    }
+*/
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int x1, x2, y1, y2;
@@ -202,12 +242,12 @@ public class WordSearchGridView extends GridView {
                 x2 = (int) event.getX();
                 y2 = (int) event.getY();
                 result = true;
-                updateCurrentHighlightedNodes(new Point(calcRelativeX(x2), calcRelativeY(y2)));
+                updateCurrentHighlightedNodes(new Point(calcRelativeX(x2), calcRelativeY(y2)), false);
                 break;
             case MotionEvent.ACTION_UP:
                 isWordFound();
                 if (!mIsWordFound)
-                    clearHighlighedNodesAndNotifyAdapter();
+                        clearHighlighedNodesAndNotifyAdapter();
                 result = true;
                 break;
         }

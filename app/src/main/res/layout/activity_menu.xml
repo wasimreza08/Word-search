@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgound_menu"
+    android:background="@drawable/leaf_back"
     tools:context="chrisjluc.onesearch.ui.MenuActivity">
 
    <!-- <FrameLayout
@@ -18,7 +18,12 @@
         android:gravity="center_horizontal"
         android:layout_margin="40dp">
 
-        <chrisjluc.onesearch.ui.components.GameBoldTextView
+        <ImageView
+            android:src="@drawable/game_name_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+      <!--  <chrisjluc.onesearch.ui.components.GameBoldTextView
             android:textSize="70sp"
             android:text="ONE"
             android:textColor="@color/green"
@@ -31,7 +36,7 @@
             android:textColor="@color/blue"
             android:singleLine="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
     </LinearLayout>
 
     <RelativeLayout
@@ -42,7 +47,7 @@
 
 
         <LinearLayout
-            android:layout_below="@+id/title_layout"
+            android:layout_below="@id/title_layout"
             android:layout_marginTop="16dp"
             android:id="@+id/button_layout"
             android:layout_width="wrap_content"
@@ -91,14 +96,33 @@
                 android:id="@+id/bMenuSignIn" />
         </LinearLayout>
     </RelativeLayout>
+
     <ImageButton
         android:id="@+id/sound"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@drawable/volume"
         android:layout_alignParentRight="true"
+        android:layout_above="@+id/ad_view"
+        android:layout_margin="16dp" />
+
+    <ImageButton
+        android:id="@+id/rate"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/rate"
         android:layout_margin="16dp"
-        android:layout_alignParentBottom="true"/>
+        android:layout_above="@+id/ad_view" />
+    <com.google.android.gms.ads.AdView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ad_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|end"
+        app:adSize="BANNER"
+        app:adUnitId="@string/ad_unit_id" />
    <!-- <FrameLayout
         android:layout_width="fill_parent"
         android:layout_alignParentBottom="true"

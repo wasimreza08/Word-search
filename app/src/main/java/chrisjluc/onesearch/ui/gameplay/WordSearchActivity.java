@@ -13,11 +13,16 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.Locale;
 import java.util.Random;
 
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.adapters.WordSearchPagerAdapter;
+import chrisjluc.onesearch.ads.GoogleAds;
 import chrisjluc.onesearch.animation.BounceTouch;
 import chrisjluc.onesearch.base.BaseActivity;
 import chrisjluc.onesearch.framework.WordSearchManager;
@@ -53,9 +58,11 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private long mRoundTime;
     private int mScore;
     private int mSkipped;
+    private AdView mAdView;
     private Random rand = new Random();
     private ImageButton soundBtn;
     private WordSearchPagerAdapter mWordSearchPagerAdapter;
+    private BounceTouch mBounceTouch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +70,27 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         categoryId = R.string.ga_gameplay_screen;
         // getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.wordsearch_activity);
+        mBounceTouch = new BounceTouch(this);
         mGameState = GameState.START;
-        findViewById(R.id.bSkip).setOnClickListener(this);
-        findViewById(R.id.bPause).setOnClickListener(this);
+        findViewById(R.id.bSkip).setOnTouchListener(mBounceTouch);
+        findViewById(R.id.bPause).setOnTouchListener(mBounceTouch);
         soundBtn = (ImageButton) findViewById(R.id.sound);
-        soundBtn.setOnTouchListener(new BounceTouch(this));
+        soundBtn.setOnTouchListener(mBounceTouch);
         mTimerTextView = (TextView) findViewById(R.id.tvTimer);
         mScoreTextView = (TextView) findViewById(R.id.tvScore);
         mScoreTextView.setText("0");
+        mAdView = (AdView) findViewById(R.id.ad_view);
+        //mAdView.setAdSize(AdSize.SMART_BANNER);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        // Start loading the ad in the background.
+        mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdOpened() {
+                // Save app state before going to the ad overlay.
+            }
+        });
+        GoogleAds.getGoogleAds(this).requestNewInterstitial();
         sTTobj = new TextToSpeech(this,this);
         sTTobj.setSpeechRate(0.5f);
         currentItem = 0;
@@ -163,7 +183,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                     mViewPager.setCurrentItem(currentItem);
                 }
             }
-        }, 200);
+        }, 250);
 
     }
 
@@ -244,6 +264,9 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     protected void onResume() {
         super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
         //analyticsTrackScreen(getString(categoryId));
         if (mGameState.equals(GameState.START) || mGameState.equals(GameState.FINISHED))
             mGameState = GameState.PLAY;
@@ -257,6 +280,15 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         AudioManagerUtils.getInstance().pauseBackgroundMusic();
         stopCountDownTimer();
     }
+
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
+    }
+
     private  TextToSpeech sTTobj;
 
     public TextToSpeech getTTObject(){
@@ -298,7 +330,14 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                         i.putExtra("score", mScore);
                         i.putExtra("skipped", mSkipped);
                         startActivity(i);
-                        finish();
+
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                GoogleAds.getGoogleAds(WordSearchActivity.this).showInterstitial();
+                                finish();
+                            }
+                        }, 4000);
                     }
                 }).start();
             }

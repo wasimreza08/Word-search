@@ -24,8 +24,8 @@ public class WordSearchManager {
 
     public final static int HARD_MIN_WORDLENGTH = 6;
     public final static int HARD_MAX_WORDLENGTH = 7;
-    public final static int HARD_MIN_DIMENSION_OFFSET = 1;
-    public final static int HARD_MAX_DIMENSION_OFFSET = 1;
+    public final static int HARD_MIN_DIMENSION_OFFSET = 0;
+    public final static int HARD_MAX_DIMENSION_OFFSET = 0;
 
     public final static int ADVANCED_MIN_WORDLENGTH = 9;
     public final static int ADVANCED_MAX_WORDLENGTH = 11;

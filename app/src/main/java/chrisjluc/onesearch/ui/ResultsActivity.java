@@ -6,14 +6,25 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.SparseArray;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.jinatonic.confetti.CommonConfetti;
+import com.github.jinatonic.confetti.ConfettiManager;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.games.Games;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import chrisjluc.onesearch.R;
+import chrisjluc.onesearch.ads.GoogleAds;
+import chrisjluc.onesearch.animation.BounceTouch;
 import chrisjluc.onesearch.base.BaseGooglePlayServicesActivity;
 import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.models.GameAchievement;
@@ -44,18 +55,32 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     private static final int EXPERIENCED = 50;
     private static final int SPECIALIST = 100;
     private static final int EXPERT = 200;
+    private AdView mAdView;
     private GameMode mGameMode;
     private Handler mHandler = new Handler();
+    private BounceTouch mBounceTouch;
+    private RelativeLayout container;
+    private final List<ConfettiManager> activeConfettiManagers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         categoryId = R.string.ga_results_screen;
         setContentView(R.layout.activity_results);
-        findViewById(R.id.bReplay).setOnClickListener(this);
-        findViewById(R.id.bReturnMenu).setOnClickListener(this);
+        mBounceTouch = new BounceTouch(this);
+        findViewById(R.id.bReplay).setOnTouchListener(mBounceTouch);
+        findViewById(R.id.bReturnMenu).setOnTouchListener(mBounceTouch);
+        mAdView = (AdView) findViewById(R.id.ad_view);
+        container = (RelativeLayout) findViewById(R.id.container);
+        //mAdView.setAdSize(AdSize.SMART_BANNER);
+        AdRequest adRequest = new AdRequest.Builder().build();
 
+        // Start loading the ad in the background.
+
+        mAdView.loadAd(adRequest);
+        GoogleAds.getGoogleAds(this).requestNewInterstitial();
         Bundle extras = getIntent().getExtras();
+        activeConfettiManagers.add(generateRain());
         if (extras != null) {
             mScore = extras.getInt("score");
             mSkipped = extras.getInt("skipped");
@@ -87,6 +112,14 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
 
             updateSavedScoreAndRenderViews();
         }
+
+
+    }
+
+    private ConfettiManager  generateRain(){
+        final int[] colors = {R.color.blue, R.color.red_light, R.color.light_green};
+        return CommonConfetti.rainingConfetti(container, colors)
+                .stream(3000);
     }
 
     private void updateSavedScoreAndRenderViews() {
@@ -116,6 +149,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+
                             AudioManagerUtils.getInstance().setSound(ResultsActivity.this, null, R.raw.result_sound, false, 100);
 
                         }
@@ -220,6 +254,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                 startActivity(intent);
                 break;
             case R.id.bReturnMenu:
+                GoogleAds.getGoogleAds(this).showInterstitial();
                // analyticsTrackEvent(R.string.ga_click_return_to_menu);
                 break;
         }
@@ -236,8 +271,18 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     @Override
     protected void onResume() {
         super.onResume();
-
+        if (mAdView != null) {
+            mAdView.resume();
+        }
         //analyticsTrackScreen(getString(categoryId));
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -251,9 +296,9 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
         if (mGameMode != null) {
             findViewById(R.id.bResultSignIn).setVisibility(View.GONE);
             findViewById(R.id.bShowLeaderBoards).setVisibility(View.VISIBLE);
-            findViewById(R.id.bShowLeaderBoards).setOnClickListener(this);
+            findViewById(R.id.bShowLeaderBoards).setOnTouchListener(mBounceTouch);
             findViewById(R.id.bShowAchievements).setVisibility(View.VISIBLE);
-            findViewById(R.id.bShowAchievements).setOnClickListener(this);
+            findViewById(R.id.bShowAchievements).setOnTouchListener(mBounceTouch);
             updateLeaderboard();
             updateAchievements();
         }
@@ -265,6 +310,6 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
         findViewById(R.id.bResultSignIn).setVisibility(View.VISIBLE);
         findViewById(R.id.bShowLeaderBoards).setVisibility(View.GONE);
         findViewById(R.id.bShowAchievements).setVisibility(View.GONE);
-        findViewById(R.id.bResultSignIn).setOnClickListener(this);
+        findViewById(R.id.bResultSignIn).setOnTouchListener(mBounceTouch);
     }
 }

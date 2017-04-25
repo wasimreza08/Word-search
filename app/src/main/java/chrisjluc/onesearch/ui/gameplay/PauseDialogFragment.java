@@ -8,7 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import chrisjluc.onesearch.R;
@@ -22,9 +22,9 @@ public class PauseDialogFragment extends DialogFragment {
         WordSearchActivity activity = (WordSearchActivity) getActivity();
         LayoutInflater inflater = activity.getLayoutInflater();
         View layout = inflater.inflate(R.layout.fragment_gameplay_dialog, null);
-        Button resumeButton = (Button) layout.findViewById(R.id.bResume);
-        Button restartButton = (Button) layout.findViewById(R.id.bRestart);
-        Button quitButton = (Button) layout.findViewById(R.id.bQuit);
+        ImageButton resumeButton = (ImageButton) layout.findViewById(R.id.bResume);
+        ImageButton restartButton = (ImageButton) layout.findViewById(R.id.bRestart);
+        ImageButton quitButton = (ImageButton) layout.findViewById(R.id.bQuit);
         resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

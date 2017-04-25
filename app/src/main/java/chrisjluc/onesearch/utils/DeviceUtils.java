@@ -1,13 +1,19 @@
 package chrisjluc.onesearch.utils;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.support.v4.app.NotificationCompat;
 import android.view.Display;
 import android.view.WindowManager;
 
+import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.models.GameState;
+import chrisjluc.onesearch.service.MyService;
 
 public class DeviceUtils {
     private static Boolean mIsTablet;
@@ -31,7 +37,23 @@ public class DeviceUtils {
         }
         return mIsSmallScreen;
     }
+    public static Notification createNotification(Context context) {
+        Intent nextIntent = new Intent(context, MyService.class);
+        // nextIntent.setAction(Constants.ACTION.NEXT_ACTION);
+        PendingIntent pnextIntent = PendingIntent.getService(context, 0,
+                nextIntent, 0);
+        NotificationCompat.Builder notificationI = new NotificationCompat.Builder(context)
+                .setContentTitle("")
+                .setTicker("")
+                .setContentText("")
+                .setSmallIcon(R.drawable.app_icon)
+                .setAutoCancel(false)
+                .setContentIntent(pnextIntent);
+        Notification notification = notificationI.build();
+        notification.priority = Notification.PRIORITY_MIN;
 
+        return notification;
+    }
     public static boolean getSound(Context context){
         SharedPreferences prefs = context.getSharedPreferences(GameState.PREF_NAME, context.MODE_PRIVATE);
        return prefs.getBoolean(GameState.SOUND_PREF, true);

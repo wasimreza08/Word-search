@@ -31,8 +31,8 @@ import github.chenupt.multiplemodel.ItemEntityUtil;
 import github.chenupt.multiplemodel.viewpager.ModelPagerAdapter;
 import github.chenupt.multiplemodel.viewpager.PagerManager;
 
-import github.chenupt.springindicator.SpringIndicator;
-import github.chenupt.springindicator.viewpager.ScrollerViewPager;
+//import github.chenupt.springindicator.SpringIndicator;
+//import github.chenupt.springindicator.viewpager.ScrollerViewPager;
 import me.relex.circleindicator.CircleIndicator;
 
 public class SplashActivity extends AppCompatActivity implements View.OnClickListener {
@@ -82,6 +82,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
             editor.putBoolean(FIRST_TIME, false);
             editor.apply();
             startActivity(new Intent(this, MenuActivity.class));
+            finish();
         }
     }
 

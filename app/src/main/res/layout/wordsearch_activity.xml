@@ -2,68 +2,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WordSearchActivity">
+    android:background="@drawable/bg_starbursts_feature">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/llTop"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/llTop"
         android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
         android:weightSum="1">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin"
             android:layout_weight="0.50"
-            android:orientation="horizontal"
             android:gravity="center"
-            android:layout_margin="@dimen/activity_vertical_margin">
+            android:orientation="horizontal">
 
             <chrisjluc.onesearch.ui.components.GameTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:paddingRight="@dimen/wordsearchactivity_indicator_text_padding_left"
                 android:text="Time"
-                android:textSize="@dimen/wordsearchactivity_indicator_text_title_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="@dimen/wordsearchactivity_indicator_text_title_size" />
 
             <chrisjluc.onesearch.ui.components.GameBoldTextView
                 android:id="@+id/tvTimer"
-                android:text="@string/app_name"
-                android:gravity="center"
-                android:textSize="@dimen/wordsearchactivity_indicator_text_size"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textSize="@dimen/wordsearchactivity_indicator_text_size" />
 
         </LinearLayout>
-        <ImageButton
-            android:id="@+id/sound"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/volume"
-           android:layout_gravity="center"/>
+
+
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin"
             android:layout_weight="0.50"
-            android:orientation="horizontal"
             android:gravity="center"
-            android:layout_margin="@dimen/activity_vertical_margin">
+            android:orientation="horizontal">
 
             <chrisjluc.onesearch.ui.components.GameTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:paddingRight="@dimen/wordsearchactivity_indicator_text_padding_left"
                 android:text="Score"
-                android:textSize="@dimen/wordsearchactivity_indicator_text_title_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="@dimen/wordsearchactivity_indicator_text_title_size" />
 
             <chrisjluc.onesearch.ui.components.GameBoldTextView
                 android:id="@+id/tvScore"
-                android:text="@string/app_name"
-                android:gravity="center"
-                android:textSize="@dimen/wordsearchactivity_indicator_text_size"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textSize="@dimen/wordsearchactivity_indicator_text_size" />
 
         </LinearLayout>
 
@@ -73,45 +70,71 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:layout_below="@+id/llTop"
-        android:layout_above="@+id/llBottom" />
-
-    <LinearLayout
-        android:layout_marginBottom="@dimen/wordsearchactivity_button_margin_bottom"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/llBottom"
+        android:layout_below="@+id/llBottom"
+        tools:context=".MainActivity" />
+
+    <com.google.android.gms.ads.AdView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ad_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:weightSum="1">
+        app:adSize="BANNER"
+        app:adUnitId="@string/ad_unit_id" />
+
+    <LinearLayout
+        android:id="@+id/llBottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llTop"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="0.50">
+            android:layout_weight="1">
 
-            <chrisjluc.onesearch.ui.components.GameButton
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/element_margin_separation"
-                android:text="Pause"
-                android:id="@+id/bPause" />
+            <ImageButton
+                android:id="@+id/bPause"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/pause"
+                android:text="Pause" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="0.50">
+            android:layout_weight="1">
 
-            <chrisjluc.onesearch.ui.components.GameButton
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/element_margin_separation"
-                android:text="Skip"
-                android:id="@+id/bSkip" />
+            <ImageButton
+                android:id="@+id/sound"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/volume"
+                android:text="Pause" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/bSkip"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/next"
+                android:text="Skip" />
         </RelativeLayout>
 
     </LinearLayout>

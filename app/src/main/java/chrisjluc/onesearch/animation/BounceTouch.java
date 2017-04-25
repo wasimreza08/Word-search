@@ -8,6 +8,7 @@ import android.view.View;
 
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.ui.MenuActivity;
+import chrisjluc.onesearch.ui.ResultsActivity;
 import chrisjluc.onesearch.ui.SplashActivity;
 import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
 
@@ -43,6 +44,8 @@ public class BounceTouch implements View.OnTouchListener {
                     ((WordSearchActivity)mContext).onClick(view);
                 }else if(mContext instanceof SplashActivity){
                     ((SplashActivity)mContext).onClick(view);
+                }else if(mContext instanceof ResultsActivity){
+                    ((ResultsActivity)mContext).onClick(view);
                 }
 
                 break;

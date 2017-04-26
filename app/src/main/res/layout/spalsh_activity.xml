@@ -8,11 +8,29 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/title_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_margin="20dp">
+
+            <ImageView
+                android:textSize="60sp"
+                android:text="ONE"
+                android:src="@drawable/game_name_small"
+                android:textColor="@color/green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager_default"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/title_layout"/>
 
         <me.relex.circleindicator.CircleIndicator
             android:id="@+id/indicator_default"

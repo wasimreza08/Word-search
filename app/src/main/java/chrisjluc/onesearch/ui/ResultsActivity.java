@@ -12,8 +12,7 @@ import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.jinatonic.confetti.CommonConfetti;
-import com.github.jinatonic.confetti.ConfettiManager;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
@@ -60,7 +59,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     private Handler mHandler = new Handler();
     private BounceTouch mBounceTouch;
     private RelativeLayout container;
-    private final List<ConfettiManager> activeConfettiManagers = new ArrayList<>();
+    //private final List<ConfettiManager> activeConfettiManagers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +79,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
         mAdView.loadAd(adRequest);
         GoogleAds.getGoogleAds(this).requestNewInterstitial();
         Bundle extras = getIntent().getExtras();
-        activeConfettiManagers.add(generateRain());
+        //activeConfettiManagers.add(generateRain());
         if (extras != null) {
             mScore = extras.getInt("score");
             mSkipped = extras.getInt("skipped");
@@ -116,12 +115,12 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
 
     }
 
-    private ConfettiManager  generateRain(){
+    /*private ConfettiManager  generateRain(){
         final int[] colors = {R.color.blue, R.color.red_light, R.color.light_green};
         return CommonConfetti.rainingConfetti(container, colors)
                 .stream(3000);
     }
-
+*/
     private void updateSavedScoreAndRenderViews() {
 
         TextView scoreTextView = (TextView) findViewById(R.id.tvScoreResult);

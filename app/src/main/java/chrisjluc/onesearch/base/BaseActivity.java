@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -13,13 +14,14 @@ import com.google.android.gms.analytics.Tracker;
 
 import chrisjluc.onesearch.OnesearchApp;
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends AppCompatActivity {
 
     protected int categoryId = -1;
    // private Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

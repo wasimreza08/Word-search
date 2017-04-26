@@ -1,17 +1,20 @@
 package chrisjluc.onesearch.adapters;
 
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+
 import android.content.Context;
-import android.support.v13.app.FragmentPagerAdapter;
+
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
 import chrisjluc.onesearch.ui.gameplay.WordSearchFragment;
 
 /**
- * A {@link android.support.v13.app.FragmentPagerAdapter} that returns a fragment corresponding to
+ * A {@link } that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
 public class WordSearchPagerAdapter extends FragmentPagerAdapter {

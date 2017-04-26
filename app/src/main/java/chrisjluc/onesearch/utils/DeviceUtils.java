@@ -13,7 +13,7 @@ import android.view.WindowManager;
 
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.models.GameState;
-import chrisjluc.onesearch.service.MyService;
+
 
 public class DeviceUtils {
     private static Boolean mIsTablet;
@@ -37,7 +37,7 @@ public class DeviceUtils {
         }
         return mIsSmallScreen;
     }
-    public static Notification createNotification(Context context) {
+  /*  public static Notification createNotification(Context context) {
         Intent nextIntent = new Intent(context, MyService.class);
         // nextIntent.setAction(Constants.ACTION.NEXT_ACTION);
         PendingIntent pnextIntent = PendingIntent.getService(context, 0,
@@ -53,7 +53,7 @@ public class DeviceUtils {
         notification.priority = Notification.PRIORITY_MIN;
 
         return notification;
-    }
+    }*/
     public static boolean getSound(Context context){
         SharedPreferences prefs = context.getSharedPreferences(GameState.PREF_NAME, context.MODE_PRIVATE);
        return prefs.getBoolean(GameState.SOUND_PREF, true);

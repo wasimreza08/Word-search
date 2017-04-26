@@ -110,7 +110,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
           may be best to switch to a
           {@link android.support.v13.app.FragmentStatePagerAdapter}.
          */
-        mWordSearchPagerAdapter = new WordSearchPagerAdapter(getFragmentManager(), getApplicationContext());
+        mWordSearchPagerAdapter = new WordSearchPagerAdapter(getSupportFragmentManager(), getApplicationContext());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (WordSearchViewPager) findViewById(R.id.pager);

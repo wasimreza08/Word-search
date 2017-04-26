@@ -3,29 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/title_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_margin="20dp">
-
-        <chrisjluc.onesearch.ui.components.GameBoldTextView
-            android:textSize="60sp"
-            android:text="ONE"
-            android:textColor="@color/green"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <chrisjluc.onesearch.ui.components.GameBoldTextView
-            android:textSize="60sp"
-            android:text="SEARCH"
-            android:textColor="@color/blue"
-            android:singleLine="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
 
     <chrisjluc.onesearch.ui.components.GameBoldTextView
         android:layout_width="fill_parent"

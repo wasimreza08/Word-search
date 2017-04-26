@@ -22,7 +22,7 @@ import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.models.GameDifficulty;
 import chrisjluc.onesearch.models.GameMode;
 import chrisjluc.onesearch.models.GameType;
-import chrisjluc.onesearch.service.MyService;
+
 import chrisjluc.onesearch.sound.util.AudioManagerUtils;
 import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
 
@@ -40,6 +40,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_splash);
         super.onCreate(savedInstanceState);
         categoryId = R.string.ga_menu_screen;
         // Check if first time opening app, show splash screen

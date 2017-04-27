@@ -71,9 +71,9 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         rateButton.setOnTouchListener(bounceTouch);
         soundBtn.setOnTouchListener(bounceTouch);
 
-        findViewById(R.id.bMenuEasy).setOnClickListener(this);
-        findViewById(R.id.bMenuMedium).setOnClickListener(this);
-        findViewById(R.id.bMenuHard).setOnClickListener(this);
+        findViewById(R.id.bMenuEasy).setOnTouchListener(bounceTouch);
+        findViewById(R.id.bMenuMedium).setOnTouchListener(bounceTouch);
+        findViewById(R.id.bMenuHard).setOnTouchListener(bounceTouch);
         //TODO: Reimplement advanced after more efficient way of drawing out the grid
 //        findViewById(R.id.bMenuAdvanced).setOnClickListener(this);
     }

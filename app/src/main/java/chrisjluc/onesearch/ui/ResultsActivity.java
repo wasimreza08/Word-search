@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.games.Games;
+import com.plattysoft.leonids.ParticleSystem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,6 +143,11 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                 anim.setStartOffset(0);
                 anim.setRepeatMode(Animation.REVERSE);
                 anim.setRepeatCount(8);
+               /* new ParticleSystem(this, 100, R.drawable.falling_star_small, 4000)
+                        .setSpeedRange(0.2f, 0.5f)
+                        .setRotationSpeedRange(90, 180)
+                        .setInitialRotationRange(0, 360)
+                        .oneShot(findViewById(R.id.llScoreResult), 1500);*/
                 findViewById(R.id.tvBestScoreResultNotify).startAnimation(anim);
                 ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(mScore));
                 if(isSoundOn) {
@@ -155,11 +162,26 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                     }, 2000);
                 }
             } else {
+
+
                 if(isSoundOn) {
                     AudioManagerUtils.getInstance().setSound(this, null, R.raw.result_sound, false, 100);
                 }
                 ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(bestScore));
             }
+            Animation rotateScale = AnimationUtils.loadAnimation(getApplicationContext(),
+                    R.anim.rotate_scale);
+            findViewById(R.id.llScoreResult).startAnimation(rotateScale);
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    new ParticleSystem(ResultsActivity.this, 400, R.drawable.sperkle_small, 4000)
+                            .setSpeedRange(0.2f, 0.5f)
+                            .setRotationSpeedRange(90, 180)
+                            .setInitialRotationRange(0, 360)
+                            .oneShot(findViewById(R.id.particle), 600);
+                }
+            }, 1000);
         }
     }
 
@@ -190,7 +212,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
         int score = Math.max(mPreviousBestScore, mScore);
         SparseArray<String> achievementsMap = null;
         switch (mGameMode.getDifficulty()) {
-            case GameDifficulty.Easy:
+            case GameDifficulty.easy:
                 achievementsMap = GameAchievement.EASYACHIEVEMENTSMAP;
                 break;
             case GameDifficulty.Medium:
@@ -273,6 +295,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
         if (mAdView != null) {
             mAdView.resume();
         }
+
         //analyticsTrackScreen(getString(categoryId));
     }
 

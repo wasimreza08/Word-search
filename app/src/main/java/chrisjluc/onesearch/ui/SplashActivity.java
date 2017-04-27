@@ -83,11 +83,6 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     protected void onResume() {
         super.onResume();
         setFullscreen();
-        new ParticleSystem(this, 100, R.drawable.falling_star_small, 2000)
-                .setSpeedRange(0.2f, 0.5f)
-                .setRotationSpeedRange(90, 180)
-                .setInitialRotationRange(0, 360)
-                .oneShot(findViewById(R.id.indicator_default), 1000);
 
     }
 

@@ -19,24 +19,25 @@
         android:layout_margin="40dp">
 
         <ImageView
-            android:src="@drawable/game_name_small"
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/game_name_small" />
 
-      <!--  <chrisjluc.onesearch.ui.components.GameBoldTextView
-            android:textSize="70sp"
-            android:text="ONE"
-            android:textColor="@color/green"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!--  <chrisjluc.onesearch.ui.components.GameBoldTextView
+              android:textSize="70sp"
+              android:text="ONE"
+              android:textColor="@color/green"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
 
-        <chrisjluc.onesearch.ui.components.GameBoldTextView
-            android:textSize="70sp"
-            android:text="SEARCH"
-            android:textColor="@color/blue"
-            android:singleLine="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />-->
+          <chrisjluc.onesearch.ui.components.GameBoldTextView
+              android:textSize="70sp"
+              android:text="SEARCH"
+              android:textColor="@color/blue"
+              android:singleLine="true"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />-->
     </LinearLayout>
 
     <RelativeLayout
@@ -56,31 +57,31 @@
             android:layout_centerHorizontal="true">
 
 
-            <ImageButton
+            <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="80dp"
                 android:layout_margin="@dimen/element_margin_separation"
-                android:background="@drawable/easy"
+                android:src="@drawable/easy"
                 android:text="@string/menu_easy"
                 android:shadowColor="#A8A8A8"
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:id="@+id/bMenuEasy" />
 
-            <ImageButton
+            <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="80dp"
                 android:layout_margin="@dimen/element_margin_separation"
                 android:text="@string/menu_medium"
-                android:background="@drawable/medium"
+                android:src="@drawable/medium"
                 android:id="@+id/bMenuMedium" />
 
-            <ImageButton
+            <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="80dp"
                 android:layout_margin="@dimen/element_margin_separation"
                 android:text="@string/menu_hard"
-                android:background="@drawable/hard"
+                android:src="@drawable/hard"
                 android:id="@+id/bMenuHard" />
 <!--
             <chrisjluc.onesearch.ui.components.GameButton

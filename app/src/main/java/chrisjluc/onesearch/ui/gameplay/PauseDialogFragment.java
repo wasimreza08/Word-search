@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -53,6 +54,8 @@ public class PauseDialogFragment extends DialogFragment {
         builder.setView(layout);
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
+        dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+        dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.app_icon);
         return dialog;
     }
 

@@ -1,23 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
 
 
     <chrisjluc.onesearch.ui.components.GameBoldTextView
+        android:id="@+id/t_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/blue"
-        android:text="Only one Grid \n You can match Horizontally"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:textSize="@dimen/splash_bottom_text"
-        android:layout_marginBottom="20dp"/>
+        android:text="One Grid. You can match Horizontally"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/splash_bottom_text" />
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/app_screen"
-        android:layout_marginBottom="70dp"
-        android:layout_gravity="center_horizontal|bottom"/>
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="70dp"
+            android:src="@drawable/horizintal_tutorial" />
+
+        <ImageView
+            android:id="@+id/index"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/hand_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:visibility="gone"
+           />
+    </RelativeLayout>
 
 </LinearLayout>

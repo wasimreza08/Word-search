@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "149339585504",
+    "firebase_url": "https://word-search-brain-30464859.firebaseio.com",
+    "project_id": "word-search-brain-30464859",
+    "storage_bucket": "word-search-brain-30464859.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149339585504:android:35b29270ac12611a",
+        "android_client_info": {
+          "package_name": "com.codeartist.wordsearchbrain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "149339585504-bgnivkcn4ab5let2oqpbbq5bf8rk0gkq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjHjp-pID3MHRfqAUj-qNOzHkCaWF2rdI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "149339585504-bgnivkcn4ab5let2oqpbbq5bf8rk0gkq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

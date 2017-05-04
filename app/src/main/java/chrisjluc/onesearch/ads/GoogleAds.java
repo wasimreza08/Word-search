@@ -7,6 +7,8 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
 
 import chrisjluc.onesearch.R;
 
@@ -17,6 +19,7 @@ public class GoogleAds {
 
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
+    private RewardedVideoAd mAd;
     private static final long GAME_LENGTH_MILLISECONDS = 3000;
     private CountDownTimer mCountDownTimer;
     private boolean mGameIsInProgress;
@@ -44,7 +47,10 @@ public class GoogleAds {
                 showInterstitial();
             }*/
         });
+
+
     }
+
 
     public void showInterstitial() {
         // Show the ad if it's ready. Otherwise toast and restart the game.

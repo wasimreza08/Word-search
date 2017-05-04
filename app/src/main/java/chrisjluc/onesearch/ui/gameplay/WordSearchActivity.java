@@ -2,6 +2,8 @@ package chrisjluc.onesearch.ui.gameplay;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -12,10 +14,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 import java.util.Locale;
 import java.util.Random;
@@ -30,10 +37,11 @@ import chrisjluc.onesearch.models.GameState;
 import chrisjluc.onesearch.sound.AudioPlayer;
 import chrisjluc.onesearch.sound.util.AudioManagerUtils;
 import chrisjluc.onesearch.ui.ResultsActivity;
+import chrisjluc.onesearch.ui.components.DrawingView;
 import chrisjluc.onesearch.utils.DeviceUtils;
 
 public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener,
-        PauseDialogFragment.PauseDialogListener, View.OnClickListener, TextToSpeech.OnInitListener {
+        PauseDialogFragment.PauseDialogListener, View.OnClickListener, TextToSpeech.OnInitListener, RewardedVideoAdListener {
 
     private final static boolean ON_SKIP_HIGHLIGHT_WORD = true;
     private final static long ON_SKIP_HIGHLIGHT_WORD_DELAY_IN_MS = 500;
@@ -63,6 +71,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private ImageButton soundBtn;
     private WordSearchPagerAdapter mWordSearchPagerAdapter;
     private BounceTouch mBounceTouch;
+    private RewardedVideoAd mAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +100,17 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
             }
         });
         GoogleAds.getGoogleAds(this).requestNewInterstitial();
+        MobileAds.initialize(this, getString(R.string.ad_app_id));
+        mAd = MobileAds.getRewardedVideoAdInstance(this);
+        mAd.setRewardedVideoAdListener(this);
+        loadRewardedVideoAd();
         sTTobj = new TextToSpeech(this,this);
         sTTobj.setSpeechRate(0.5f);
         currentItem = 0;
         mScore = 0;
         mSkipped = 0;
         AudioManagerUtils.getInstance().setSound(this, soundBtn, R.raw.game_background_music, true, 90);
+
         // Vibrate for 500 milliseconds
 
 
@@ -120,6 +134,10 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mTimeRemaining = mRoundTime;
         setupCountDownTimer(mTimeRemaining);
         startCountDownTimer();
+    }
+
+    private void loadRewardedVideoAd() {
+        mAd.loadAd(getString(R.string.reward_ad_id), new AdRequest.Builder().build());
     }
 
     private void pauseGameplay() {
@@ -196,6 +214,11 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
     }
 
+    @Override
+    public void notifyWordNotThere() {
+
+    }
+
 
     private int randomNumber() {
         int randomNum = rand.nextInt((100 - 0) + 1) + 0;
@@ -267,6 +290,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         if (mAdView != null) {
             mAdView.resume();
         }
+        mAd.resume(this);
         //analyticsTrackScreen(getString(categoryId));
         if (mGameState.equals(GameState.START) || mGameState.equals(GameState.FINISHED))
             mGameState = GameState.PLAY;
@@ -278,6 +302,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     protected void onPause() {
         super.onPause();
         AudioManagerUtils.getInstance().pauseBackgroundMusic();
+        mAd.pause(this);
         stopCountDownTimer();
     }
 
@@ -330,11 +355,17 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                         i.putExtra("score", mScore);
                         i.putExtra("skipped", mSkipped);
                         startActivity(i);
-
+                        if (mAd.isLoaded()) {
+                            mAd.show();
+                        }
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                GoogleAds.getGoogleAds(WordSearchActivity.this).showInterstitial();
+                                if (mAd.isLoaded()) {
+                                    mAd.show();
+                                }else {
+                                    GoogleAds.getGoogleAds(WordSearchActivity.this).showInterstitial();
+                                }
                                 finish();
                             }
                         }, 4000);
@@ -370,5 +401,42 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         if (i == TextToSpeech.SUCCESS) {
             ((WordSearchFragment) mWordSearchPagerAdapter.getFragmentFromCurrentItem(currentItem)).speakOut();
         }
+    }
+
+    @Override
+    public void onRewarded(RewardItem reward) {
+        Toast.makeText(this, "onRewarded! currency: " + reward.getType() + "  amount: " +
+                reward.getAmount(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+        Toast.makeText(this, "onRewardedVideoAdLeftApplication",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+        Toast.makeText(this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int errorCode) {
+        Toast.makeText(this, "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+        Toast.makeText(this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+        Toast.makeText(this, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+        Toast.makeText(this, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
     }
 }

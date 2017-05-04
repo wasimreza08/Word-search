@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="blue">#00A2EA</color>
+    <color name="blue_light">#FF44C1F9</color>
     <color name="green">#1ACA85</color>
     <color name="light_green">#FF3EFCB1</color>
+    <color name="atr_green">#a4f5d6</color>
     <color name="yellow">#FFEAF207</color>
     <color name="purple">#8B77CC</color>
     <color name="purple_light">#bcabf2</color>

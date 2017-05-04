@@ -275,7 +275,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                 startActivity(intent);
                 break;
             case R.id.bReturnMenu:
-                GoogleAds.getGoogleAds(this).showInterstitial();
+                //GoogleAds.getGoogleAds(this).showInterstitial();
                // analyticsTrackEvent(R.string.ga_click_return_to_menu);
                 break;
         }

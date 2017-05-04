@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.ads.GoogleAds;
 import chrisjluc.onesearch.animation.BounceTouch;
+import chrisjluc.onesearch.base.BaseActivity;
 import chrisjluc.onesearch.base.BaseGooglePlayServicesActivity;
 import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.models.GameDifficulty;
@@ -25,11 +26,11 @@ import chrisjluc.onesearch.models.GameType;
 
 import chrisjluc.onesearch.sound.util.AudioManagerUtils;
 import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
+import chrisjluc.onesearch.utils.CommonUtil;
 
-public class MenuActivity extends BaseGooglePlayServicesActivity implements View.OnClickListener {
+public class MenuActivity extends BaseActivity implements View.OnClickListener {
 
-    private final static String MENU_PREF_NAME = "menu_prefs";
-    private final static String FIRST_TIME = "first_time";
+
 
     private final static long ROUND_TIME_IN_MS = 60000;
     private BounceTouch bounceTouch;
@@ -37,6 +38,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     private AdView mAdView;
 
     private Handler mHandler = new Handler();
+    private final static String MENU_PREF_NAME = "menu_prefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +46,8 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         super.onCreate(savedInstanceState);
         categoryId = R.string.ga_menu_screen;
         // Check if first time opening app, show splash screen
-        SharedPreferences prefs = getSharedPreferences(MENU_PREF_NAME, MODE_PRIVATE);
-        boolean isFirstTime = prefs.getBoolean(FIRST_TIME, true);
-        if (isFirstTime) {
-            finish();
-            Intent i = new Intent(getApplicationContext(), SplashActivity.class);
-            startActivity(i);
-        }
+
+
         setContentView(R.layout.activity_menu);
         mAdView = (AdView) findViewById(R.id.ad_view);
         //mAdView.setAdSize(AdSize.SMART_BANNER);
@@ -74,22 +71,40 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         findViewById(R.id.bMenuEasy).setOnTouchListener(bounceTouch);
         findViewById(R.id.bMenuMedium).setOnTouchListener(bounceTouch);
         findViewById(R.id.bMenuHard).setOnTouchListener(bounceTouch);
+        SharedPreferences prefs = getSharedPreferences(MENU_PREF_NAME, MODE_PRIVATE);
+        //boolean isConnected = prefs.getBoolean(CommonUtil.IS_CONNECTED, false);
+        findViewById(R.id.bMenuSignIn).setVisibility(View.GONE);
+      /* if(isConnected){
+
+       }else {
+           findViewById(R.id.bMenuSignIn).setVisibility(View.VISIBLE);
+           findViewById(R.id.bMenuSignIn).setOnClickListener(this);
+       }*/
+
         //TODO: Reimplement advanced after more efficient way of drawing out the grid
 //        findViewById(R.id.bMenuAdvanced).setOnClickListener(this);
     }
 
 
-
-
+    @Override
+    public void onBackPressed() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                GoogleAds.getGoogleAds(MenuActivity.this).showInterstitial();
+            }
+        }, 2000);
+        super.onBackPressed();
+    }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.bMenuSignIn) {
+       /* if (view.getId() == R.id.bMenuSignIn) {
             mInSignInFlow = true;
             mSignInClicked = true;
             mGoogleApiClient.connect();
             return;
-        }
+        }*/
         String gd = null;
         int ga_button_id = -1;
         long time = ROUND_TIME_IN_MS;
@@ -163,16 +178,15 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         super.onDestroy();
     }
 
-    @Override
+   /* @Override
     public void onConnected(Bundle bundle) {
         super.onConnected(bundle);
-        findViewById(R.id.bMenuSignIn).setVisibility(View.GONE);
+
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         super.onConnectionFailed(connectionResult);
-        findViewById(R.id.bMenuSignIn).setVisibility(View.VISIBLE);
-        findViewById(R.id.bMenuSignIn).setOnClickListener(this);
-    }
+
+    }*/
 }

@@ -2,7 +2,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/result_back_pos">
+    android:background="@drawable/result_background_banner">
 
     <!--<chrisjluc.onesearch.ui.components.GameBoldTextView
         android:layout_centerHorizontal="true"

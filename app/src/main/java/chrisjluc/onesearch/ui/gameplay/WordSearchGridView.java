@@ -1,6 +1,7 @@
 package chrisjluc.onesearch.ui.gameplay;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.transition.CircularPropagation;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -13,6 +14,7 @@ import java.util.List;
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.adapters.WordSearchGridAdapter;
 import chrisjluc.onesearch.framework.WordSearchManager;
+import chrisjluc.onesearch.ui.components.DrawingView;
 import chrisjluc.onesearch.utils.CommonUtil;
 import chrisjluc.onesearch.wordSearchGenerator.generators.StringUtils;
 import chrisjluc.onesearch.wordSearchGenerator.generators.WordSearchGenerator;
@@ -126,12 +128,11 @@ public class WordSearchGridView extends GridView {
         updateCurrentHighlightedNodes(mWordEnd, true);
     }
 
-    private void updateCurrentHighlightedNodes(Point p, boolean isFound) {
+
+    private void updateCurrentHighlightedNodes(Point p) {
         if (p.y < 0 || p.y >= mYLength || p.x < 0 || p.x >= mXLength) return;
 
-        if (p.equals(mEndDrag)){
-            return;
-        }
+        if (p.equals(mEndDrag)) return;
 
         mEndDrag = p;
 
@@ -172,6 +173,57 @@ public class WordSearchGridView extends GridView {
             if (index < 0 || index >= mWordSearchNodes.length)
                 continue;
             Node n = mWordSearchNodes[index];
+            mWordSearchHighlightedNodes.add(n);
+            n.setHighlighted(true);
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void updateCurrentHighlightedNodes(Point p, boolean isFound) {
+        if (p.y < 0 || p.y >= mYLength || p.x < 0 || p.x >= mXLength) return;
+
+        if (p.equals(mEndDrag)) return;
+
+        mEndDrag = p;
+
+        boolean isValid = false;
+        // diagonal
+        if (Math.abs(mEndDrag.x - mStartDrag.x) == Math.abs(mEndDrag.y - mStartDrag.y)) {
+            isValid = true;
+            // horizontal
+        } else if (mEndDrag.x - mStartDrag.x == 0) {
+            isValid = true;
+            // vertical
+        } else if (mEndDrag.y - mStartDrag.y == 0) {
+            isValid = true;
+        }
+
+        if (!isValid) return;
+
+        clearHighlightedNodes();
+        int dX = mEndDrag.x - mStartDrag.x;
+        int dY = mEndDrag.y - mStartDrag.y;
+
+        int length = 0;
+
+        if (dX != 0)
+            length = Math.abs(dX);
+
+        if (dY != 0)
+            length = Math.abs(dY);
+
+        for (int i = 0; i < length + 1; i++) {
+            Point point = new Point(mStartDrag.x, mStartDrag.y);
+            if (dX != 0)
+                point.x += dX > 0 ? i : -i;
+            if (dY != 0)
+                point.y += dY > 0 ? i : -i;
+
+            int index = point.y * mXLength + point.x;
+            if (index < 0 || index >= mWordSearchNodes.length)
+                continue;
+            Node n = mWordSearchNodes[index];
+            mWordSearchHighlightedNodes.add(n);
             if(isFound){
                 n.setHighlighted(true);
                 n.setHightLightStatus(CommonUtil.WORD_FOUND_HIGHLIGHT);
@@ -271,5 +323,7 @@ public class WordSearchGridView extends GridView {
     public interface WordFoundListener {
         public void notifyWordFound();
         public void notifyWordNotFound();
+        public void notifyWordNotThere();
+
     }
 }

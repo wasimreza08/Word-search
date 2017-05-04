@@ -1,5 +1,7 @@
 package chrisjluc.onesearch;
 
+
+
 import android.app.Application;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -33,14 +35,15 @@ public class OnesearchApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+       // MultiDex.install(this);
         // Enabling Advertising Features in Google Analytics allows you to take advantage of
         // Remarketing, Demographics & Interests reports, and more.
-        Tracker t = getTracker(TrackerName.APP_TRACKER);
+      /*  Tracker t = getTracker(TrackerName.APP_TRACKER);
         t.enableAdvertisingIdCollection(true);
 
         if(BuildConfig.DEBUG) {
             GoogleAnalytics.getInstance(this).getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
             GoogleAnalytics.getInstance(this).setDryRun(true);
-        }
+        }*/
     }
 }

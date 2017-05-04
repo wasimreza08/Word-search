@@ -10,6 +10,6 @@ public class CommonUtil {
     public static final int WORD_FOUND_HIGHLIGHT = 3;
     public static final int FOREGROUND_NOTIFICATION_ID = 220;
     public static final String PROTECTOR_COMPLETE_BROADCAST_KEY = "com.codeartist.PROTECTOR_COMPLETE";
-
+    public static final String IS_CONNECTED = "isConnected";
 
 }

@@ -12,6 +12,9 @@
     <string name="sign_in">Sign in with G+</string>
     <string name="results_return_menu">Return to Menu</string>
     <string name="results_replay">Play Again</string>
+    <string name="ad_app_id">ca-app-pub-6308034132891583~5611757550</string>
+    <string name="reward_ad_id"> ca-app-pub-6308034132891583/3541961553</string>
+
     <string name="inter_ad_id">ca-app-pub-6308034132891583/1818856357</string>
     <string name="ad_unit_id">ca-app-pub-6308034132891583/2379089556</string>
     <!-- Google Play -->

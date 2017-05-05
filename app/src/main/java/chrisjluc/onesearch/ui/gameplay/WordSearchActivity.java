@@ -103,7 +103,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         MobileAds.initialize(this, getString(R.string.ad_app_id));
         mAd = MobileAds.getRewardedVideoAdInstance(this);
         mAd.setRewardedVideoAdListener(this);
-        loadRewardedVideoAd();
+        loadRewardedVideoAd(adRequest);
         sTTobj = new TextToSpeech(this,this);
         sTTobj.setSpeechRate(0.5f);
         currentItem = 0;
@@ -136,8 +136,8 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         startCountDownTimer();
     }
 
-    private void loadRewardedVideoAd() {
-        mAd.loadAd(getString(R.string.reward_ad_id), new AdRequest.Builder().build());
+    private void loadRewardedVideoAd(AdRequest adRequest) {
+        mAd.loadAd(getString(R.string.reward_ad_id), adRequest);
     }
 
     private void pauseGameplay() {
@@ -355,9 +355,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
                         i.putExtra("score", mScore);
                         i.putExtra("skipped", mSkipped);
                         startActivity(i);
-                        if (mAd.isLoaded()) {
-                            mAd.show();
-                        }
+
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
